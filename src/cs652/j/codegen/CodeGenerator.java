@@ -1,9 +1,6 @@
 package cs652.j.codegen;
 
-import cs652.j.codegen.model.CFile;
-import cs652.j.codegen.model.MainMethod;
-import cs652.j.codegen.model.Block;
-import cs652.j.codegen.model.OutputModelObject;
+import cs652.j.codegen.model.*;
 import cs652.j.parser.JBaseVisitor;
 import cs652.j.parser.JParser;
 import cs652.j.semantics.JClass;
@@ -11,9 +8,6 @@ import org.antlr.symtab.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
-import sun.applet.Main;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	public STGroup templates;
@@ -36,15 +30,15 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	public OutputModelObject visitFile(JParser.FileContext ctx) {
 		MainMethod main = (MainMethod) visit(ctx.main());
 		CFile file = new CFile(fileName);
-		file.main = main;
+        file.main = main;
 		return file;
 	}
 
 	@Override
 	public OutputModelObject visitMain(JParser.MainContext ctx) {
-		MainMethod mainMethod = (MainMethod) visit(ctx.block());
-//        mainMethod. = visit(ctx.block());
-		return mainMethod;
+		MainMethod mainMethod = new MainMethod();
+        mainMethod.body = (Block) visit(ctx.block());
+        return mainMethod;
 	}
 
 	@Override
@@ -52,8 +46,19 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         Block block = new Block();
         for (JParser.StatementContext stat : ctx.statement()) {
             OutputModelObject smt = visit(stat);
-
+            block.locals.add(smt);
         }
         return block;
+    }
+
+    @Override
+    public OutputModelObject visitLocalVariableDeclaration(JParser.LocalVariableDeclarationContext ctx) {
+        VarDef varDef = new VarDef(ctx.jType().getText(), ctx.ID().getText());
+        return varDef;
+    }
+
+    @Override
+    public OutputModelObject visitLocalVarStat(JParser.LocalVarStatContext ctx) {
+        return visitLocalVariableDeclaration(ctx.localVariableDeclaration());
     }
 }

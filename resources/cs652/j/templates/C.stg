@@ -39,7 +39,9 @@ Block(block, locals, instrs) ::= <<
 <locals>
 >>
 
-VarDef(var, type)   ::= ""
+VarDef(var, type)   ::= <<
+<var.type> <var.id>;
+>>
 
 FuncName(f)         ::= ""
 

@@ -18,3 +18,6 @@ object *alloc(metadata *clazz) {
 }
 
 
+void main(...){
+int x;
+}

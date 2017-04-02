@@ -8,5 +8,6 @@ import java.util.List;
  */
 public class Block extends OutputModelObject {
     @ModelElement
+    public
     List<OutputModelObject> locals = new ArrayList<>();
 }
