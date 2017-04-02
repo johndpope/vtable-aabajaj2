@@ -52,13 +52,49 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     }
 
     @Override
+    public OutputModelObject visitLocalVarStat(JParser.LocalVarStatContext ctx) {
+        return visitLocalVariableDeclaration(ctx.localVariableDeclaration());
+    }
+
+    @Override
     public OutputModelObject visitLocalVariableDeclaration(JParser.LocalVariableDeclarationContext ctx) {
         VarDef varDef = new VarDef(ctx.jType().getText(), ctx.ID().getText());
         return varDef;
     }
 
     @Override
-    public OutputModelObject visitLocalVarStat(JParser.LocalVarStatContext ctx) {
-        return visitLocalVariableDeclaration(ctx.localVariableDeclaration());
+    public OutputModelObject visitPrintStringStat(JParser.PrintStringStatContext ctx) {
+        PrintStringStat pss = new PrintStringStat(ctx.STRING().getText());
+        return pss;
+    }
+
+    @Override
+    public OutputModelObject visitPrintStat(JParser.PrintStatContext ctx) {
+        PrintStat ps = new PrintStat(ctx.STRING().getText());
+
+        return ps;
+    }
+
+    @Override
+    public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
+        AssignStat as = new AssignStat();
+        as.left =  ctx.expression(0).getText();
+        System.out.println("Visiting tree= "+ctx.expression(1).getText());
+        as.right = ctx.expression(1).getText();
+        return as;
+    }
+
+    @Override
+    public OutputModelObject visitIdRef(JParser.IdRefContext ctx) {
+        VarRef vr = new VarRef(ctx.getText());
+        System.out.println("VarRef="+ctx.getText());
+        return vr;
+    }
+
+    @Override
+    public OutputModelObject visitLiteralRef(JParser.LiteralRefContext ctx) {
+        LiteralRef lr = new LiteralRef(ctx.INT().getText());
+        System.out.println("LR="+ctx.INT().getText());
+        return  lr;
     }
 }

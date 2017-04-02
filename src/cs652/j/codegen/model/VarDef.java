@@ -10,5 +10,4 @@ public class VarDef extends OutputModelObject {
         type = t;
         id = i;
     }
-
 }

@@ -31,7 +31,7 @@ MethodDef(m,funcName,returnType,args,body) ::= <<
 
 MainMethod(main,funcName,returnType,args,body) ::= <<
 void main(...){
-<body>
+    <body>
 }
 >>
 
@@ -41,6 +41,7 @@ Block(block, locals, instrs) ::= <<
 
 VarDef(var, type)   ::= <<
 <var.type> <var.id>;
+
 >>
 
 FuncName(f)         ::= ""
@@ -48,9 +49,16 @@ FuncName(f)         ::= ""
 ObjectTypeSpec(o)   ::= ""
 PrimitiveTypeSpec(p)::= "<p.name>"
 
-AssignStat(a,left,right) ::= ";"
-PrintStringStat(p)  ::= ""
-PrintStat(p,args)   ::= ""
+AssignStat(a,left,right) ::= <<
+<a.left>=<a.right>;
+
+>>
+PrintStringStat(p)  ::= <<
+printf(<p.print>);
+>>
+PrintStat(p,args)   ::= <<
+printf(<p.print>,<args>);
+>>
 CallStat(c,call)    ::= ""
 CtorCall(ctor)      ::= ""
 ReturnStat(r,expr)  ::= ""
@@ -61,8 +69,8 @@ IfElseStat(i,condition, stat, elseStat) ::= <<
 
 NullRef(n)          ::= "NULL"
 
-LiteralRef(lit)     ::= ""
-VarRef(v)           ::= ""
+LiteralRef(lit)     ::= "<lit>"
+VarRef(v)           ::= "<v.id>"
 FieldRef(f, object) ::= ""
 ThisRef(t)          ::= "this"
 MethodCall(m, receiver, receiverType, fptrType, args) ::= <<

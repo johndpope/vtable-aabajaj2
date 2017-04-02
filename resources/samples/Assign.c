@@ -19,5 +19,7 @@ object *alloc(metadata *clazz) {
 
 
 void main(...){
-int x;
+    int x;
+    x=1;
+    printf("%d\n",);
 }
