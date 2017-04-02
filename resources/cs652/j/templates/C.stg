@@ -30,9 +30,13 @@ MethodDef(m,funcName,returnType,args,body) ::= <<
 >>
 
 MainMethod(main,funcName,returnType,args,body) ::= <<
+void main(...){
+<body>
+}
 >>
 
 Block(block, locals, instrs) ::= <<
+<locals>
 >>
 
 VarDef(var, type)   ::= ""
