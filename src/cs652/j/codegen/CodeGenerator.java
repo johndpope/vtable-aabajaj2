@@ -83,7 +83,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
         AssignStat as = new AssignStat();
         as.left =  ctx.expression(0).getText();
-        System.out.println("Visiting tree= "+ctx.expression(1).getText());
+        System.out.println("Visiting tree = "+ctx.expression(1).getText());
         as.right = ctx.expression(1).getText();
         return as;
     }

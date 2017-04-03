@@ -5,8 +5,6 @@ package cs652.j.codegen.model;
  */
 public class AssignStat extends Stat {
     //Stat a = new AssignStat();
-    public @ModelElement
-    String left;
-    public @ModelElement
-    String right;
+    public @ModelElement String left;
+    public @ModelElement String right;
 }
