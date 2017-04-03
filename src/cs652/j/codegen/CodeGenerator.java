@@ -81,9 +81,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
         AssignStat as = new AssignStat(ctx.expression(0).getText(),ctx.expression(1).getText());
-//        as.left =  ctx.expression(0).getText();
-//        System.out.println("Visiting tree = "+ctx.expression(1).getText());
-//        as.right = ctx.expression(1).getText();
         return as;
     }
 
@@ -102,12 +99,20 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitIfStat(JParser.IfStatContext ctx) {
         IfStat ifs = new IfStat();
+        IfElseStat ifElseStat = new IfElseStat();
         ifs.condition = ctx.parExpression().getText();
         for (JParser.StatementContext stat : ctx.statement()) {
             OutputModelObject smt = visit(stat);
             ifs.stat.add(smt);
         }
-        return ifs;
+        if(ctx.statement(1) == null) {
+            return ifs;
+        }else {
+            ifElseStat.condition = ctx.parExpression().getText();
+            OutputModelObject smt = visit(ctx.statement(1));
+            ifElseStat.elseStat.add(smt);
+            return ifElseStat;
+        }
     }
 
     @Override
@@ -117,9 +122,12 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         System.out.println("Return expression = "+ctx.expression());
         return returnStat;
     }
-//    @Override
-//    public OutputModelObject visitParExpression(JParser.ParExpressionContext ctx) {
-//
-//        return
-//    }
+
+    @Override
+    public OutputModelObject visitCtorCall(JParser.CtorCallContext ctx) {
+        CtorCall ctorCall = new CtorCall();
+        ctorCall.ctor = visit(ctx.ID());
+        System.out.println(ctorCall.ctor);
+        return ctorCall;
+    }
 }

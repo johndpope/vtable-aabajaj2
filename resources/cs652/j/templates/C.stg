@@ -61,18 +61,21 @@ PrintStat(p,args)   ::= <<
 printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
 >>
 CallStat(c,call)    ::= ""
-CtorCall(ctor)      ::= ""
+CtorCall(ctor)      ::= "new <ctor> ()"
 ReturnStat(r,expr)  ::= "return <expr>"
 WhileStat(w,condition, stat) ::= ""
 IfStat(i,condition, stat) ::= <<
 if<i.condition> <stat>
 >>
 IfElseStat(i,condition, stat, elseStat) ::= <<
+if<i.condition> <stat>
+else <elseStat>
+
 >>
 
 NullRef(n)          ::= "NULL"
 
-LiteralRef(lit)     ::= "<lit>"
+LiteralRef(lit)     ::= "<lit.id>"
 VarRef(v)           ::= "<v.id>"
 FieldRef(f, object) ::= ""
 ThisRef(t)          ::= "this"
