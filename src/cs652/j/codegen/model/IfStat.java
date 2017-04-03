@@ -11,6 +11,5 @@ import java.util.List;
 public class IfStat extends Stat {
     public @ModelElement String condition;
     public @ModelElement List<OutputModelObject> stat = new ArrayList<>();
-
 }
 

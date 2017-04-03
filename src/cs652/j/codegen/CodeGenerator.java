@@ -126,6 +126,15 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     }
 
     @Override
+    public OutputModelObject visitWhileStat(JParser.WhileStatContext ctx) {
+        WhileStat whileStat = new WhileStat();
+        whileStat.condition = ctx.parExpression().getText();
+        whileStat.stat = ctx.statement().getText();
+        System.out.println("While statemnt= "+ctx.statement().getText());
+        return whileStat;
+    }
+
+    @Override
     public OutputModelObject visitCtorCall(JParser.CtorCallContext ctx) {
         CtorCall ctorCall = new CtorCall();
         ctorCall.ctor = visit(ctx.ID());
