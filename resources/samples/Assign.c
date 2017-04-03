@@ -21,5 +21,5 @@ object *alloc(metadata *clazz) {
 void main(...){
     int x;
     x=1;
-    printf("%d\n",);
+    printf("%d\n",x );
 }

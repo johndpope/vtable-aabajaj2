@@ -71,7 +71,11 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitPrintStat(JParser.PrintStatContext ctx) {
         PrintStat ps = new PrintStat(ctx.STRING().getText());
-
+        for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
+            OutputModelObject args = visit(e);
+            //System.out.println("Args="+e.getText());
+            ps.args.add(args);
+        }
         return ps;
     }
 
@@ -87,14 +91,12 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitIdRef(JParser.IdRefContext ctx) {
         VarRef vr = new VarRef(ctx.getText());
-        System.out.println("VarRef="+ctx.getText());
         return vr;
     }
 
     @Override
     public OutputModelObject visitLiteralRef(JParser.LiteralRefContext ctx) {
         LiteralRef lr = new LiteralRef(ctx.INT().getText());
-        System.out.println("LR="+ctx.INT().getText());
         return  lr;
     }
 }
