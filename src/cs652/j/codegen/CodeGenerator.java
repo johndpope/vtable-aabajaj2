@@ -109,8 +109,10 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             return ifs;
         }else {
             ifElseStat.condition = ctx.parExpression().getText();
-            OutputModelObject smt = visit(ctx.statement(1));
-            ifElseStat.elseStat.add(smt);
+            OutputModelObject smt = visit(ctx.statement(0));
+            ifElseStat.stat.add(smt);
+            OutputModelObject smt2 = visit(ctx.statement(1));
+            ifElseStat.elseStat.add(smt2);
             return ifElseStat;
         }
     }
