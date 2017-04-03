@@ -30,8 +30,9 @@ MethodDef(m,funcName,returnType,args,body) ::= <<
 >>
 
 MainMethod(main,funcName,returnType,args,body) ::= <<
-void main(...){
+int main(int argc, char *argv[]){
     <body>
+    return 0;
 }
 >>
 
@@ -50,20 +51,22 @@ ObjectTypeSpec(o)   ::= ""
 PrimitiveTypeSpec(p)::= "<p.name>"
 
 AssignStat(a,left,right) ::= <<
-<a.left>=<a.right>;
+<a.left> = <a.right>;
 
 >>
 PrintStringStat(p)  ::= <<
 printf(<p.print>);
 >>
 PrintStat(p,args)   ::= <<
-printf(<p.print>,<args :{ arg | <arg> }; separator = ", ">);
+printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
 >>
 CallStat(c,call)    ::= ""
 CtorCall(ctor)      ::= ""
-ReturnStat(r,expr)  ::= ""
+ReturnStat(r,expr)  ::= "return <expr>"
 WhileStat(w,condition, stat) ::= ""
-IfStat(i,condition, stat) ::= ""
+IfStat(i,condition, stat) ::= <<
+if<i.condition> <stat>
+>>
 IfElseStat(i,condition, stat, elseStat) ::= <<
 >>
 

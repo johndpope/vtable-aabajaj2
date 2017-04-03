@@ -10,4 +10,5 @@ public class Block extends OutputModelObject {
     @ModelElement
     public
     List<OutputModelObject> locals = new ArrayList<>();
+    public @ModelElement List<OutputModelObject> instrs = new ArrayList<>();
 }

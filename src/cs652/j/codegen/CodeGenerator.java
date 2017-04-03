@@ -73,7 +73,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         PrintStat ps = new PrintStat(ctx.STRING().getText());
         for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
             OutputModelObject args = visit(e);
-            //System.out.println("Args="+e.getText());
             ps.args.add(args);
         }
         return ps;
@@ -81,16 +80,16 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
-        AssignStat as = new AssignStat();
-        as.left =  ctx.expression(0).getText();
-        System.out.println("Visiting tree = "+ctx.expression(1).getText());
-        as.right = ctx.expression(1).getText();
+        AssignStat as = new AssignStat(ctx.expression(0).getText(),ctx.expression(1).getText());
+//        as.left =  ctx.expression(0).getText();
+//        System.out.println("Visiting tree = "+ctx.expression(1).getText());
+//        as.right = ctx.expression(1).getText();
         return as;
     }
 
     @Override
     public OutputModelObject visitIdRef(JParser.IdRefContext ctx) {
-        VarRef vr = new VarRef(ctx.getText());
+        VarRef vr = new VarRef(ctx.ID().getText());
         return vr;
     }
 
@@ -99,4 +98,28 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         LiteralRef lr = new LiteralRef(ctx.INT().getText());
         return  lr;
     }
+
+    @Override
+    public OutputModelObject visitIfStat(JParser.IfStatContext ctx) {
+        IfStat ifs = new IfStat();
+        ifs.condition = ctx.parExpression().getText();
+        for (JParser.StatementContext stat : ctx.statement()) {
+            OutputModelObject smt = visit(stat);
+            ifs.stat.add(smt);
+        }
+        return ifs;
+    }
+
+    @Override
+    public OutputModelObject visitReturnStat(JParser.ReturnStatContext ctx) {
+        ReturnStat returnStat = new ReturnStat();
+        returnStat.e = visit(ctx.expression());
+        System.out.println("Return expression = "+ctx.expression());
+        return returnStat;
+    }
+//    @Override
+//    public OutputModelObject visitParExpression(JParser.ParExpressionContext ctx) {
+//
+//        return
+//    }
 }
