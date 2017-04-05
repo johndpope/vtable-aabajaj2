@@ -92,7 +92,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitLiteralRef(JParser.LiteralRefContext ctx) {
-        LiteralRef lr = new LiteralRef(ctx.INT().getText());
+        LiteralRef lr = new LiteralRef(ctx.getText());
         return  lr;
     }
 
@@ -130,7 +130,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         WhileStat whileStat = new WhileStat();
         whileStat.condition = ctx.parExpression().getText();
         whileStat.stat = ctx.statement().getText();
-        System.out.println("While statemnt= "+ctx.statement().getText());
+//        System.out.println("While statemnt= "+ctx.statement().getText());
         return whileStat;
     }
 
@@ -140,5 +140,12 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         ctorCall.ctor = visit(ctx.ID());
         System.out.println(ctorCall.ctor);
         return ctorCall;
+    }
+
+    @Override
+    public OutputModelObject visitMethodDeclaration(JParser.MethodDeclarationContext ctx) {
+        MethodDef methodDef = new MethodDef();
+        System.out.println(ctx.getText());
+        return methodDef;
     }
 }

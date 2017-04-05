@@ -27,6 +27,7 @@ ClassDef(class, fields, methods, vtable) ::= <<
 >>
 
 MethodDef(m,funcName,returnType,args,body) ::= <<
+
 >>
 
 MainMethod(main,funcName,returnType,args,body) ::= <<
@@ -45,7 +46,7 @@ VarDef(var, type)   ::= <<
 
 >>
 
-FuncName(f)         ::= ""
+FuncName(f)         ::= "<f.name>"
 
 ObjectTypeSpec(o)   ::= ""
 PrimitiveTypeSpec(p)::= "<p.name>"
