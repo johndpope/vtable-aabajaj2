@@ -5,9 +5,9 @@ package cs652.j.codegen.model;
  */
 public class AssignStat extends Stat {
     //Stat a = new AssignStat();
-    public String left;
-    public String right;
-    public AssignStat(String l, String r){
+    public @ModelElement Expr left;
+    public @ModelElement Expr right;
+    public AssignStat(Expr l, Expr r){
         this.left = l;
         this.right = r;
     }

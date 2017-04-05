@@ -7,7 +7,7 @@ import org.antlr.symtab.VariableSymbol;
  */
 public class VarRef extends Expr {
     public String id;
-    public  VarRef(String text){
+    public VarRef(String text){
         id =text;
     }
 }

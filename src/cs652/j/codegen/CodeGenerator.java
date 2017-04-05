@@ -31,6 +31,10 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 		MainMethod main = (MainMethod) visit(ctx.main());
 		CFile file = new CFile(fileName);
         file.main = main;
+        for (JParser.ClassDeclarationContext c : ctx.classDeclaration()) {
+            ClassDef clazz = (ClassDef) visit(c);
+            file.classes.add(clazz);
+        }
 		return file;
 	}
 
@@ -72,7 +76,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitPrintStat(JParser.PrintStatContext ctx) {
         PrintStat ps = new PrintStat(ctx.STRING().getText());
         for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
-            OutputModelObject args = visit(e);
+            OutputModelObject args = (OutputModelObject) visit(e);
             ps.args.add(args);
         }
         return ps;
@@ -80,7 +84,8 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
-        AssignStat as = new AssignStat(ctx.expression(0).getText(),ctx.expression(1).getText());
+        System.out.println();
+        AssignStat as = new AssignStat((Expr) visit(ctx.expression(0)),(Expr) visit(ctx.expression(1)));
         return as;
     }
 
@@ -93,6 +98,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitLiteralRef(JParser.LiteralRefContext ctx) {
         LiteralRef lr = new LiteralRef(ctx.getText());
+//        System.out.println(ctx.getText());
         return  lr;
     }
 
@@ -121,7 +127,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitReturnStat(JParser.ReturnStatContext ctx) {
         ReturnStat returnStat = new ReturnStat();
         returnStat.e = visit(ctx.expression());
-        System.out.println("Return expression = "+ctx.expression());
         return returnStat;
     }
 
@@ -130,7 +135,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         WhileStat whileStat = new WhileStat();
         whileStat.condition = ctx.parExpression().getText();
         whileStat.stat = ctx.statement().getText();
-//        System.out.println("While statemnt= "+ctx.statement().getText());
         return whileStat;
     }
 
@@ -138,14 +142,19 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitCtorCall(JParser.CtorCallContext ctx) {
         CtorCall ctorCall = new CtorCall();
         ctorCall.ctor = visit(ctx.ID());
-        System.out.println(ctorCall.ctor);
         return ctorCall;
     }
 
     @Override
     public OutputModelObject visitMethodDeclaration(JParser.MethodDeclarationContext ctx) {
         MethodDef methodDef = new MethodDef();
-        System.out.println(ctx.getText());
         return methodDef;
+    }
+
+    @Override
+    public OutputModelObject visitClassDeclaration(JParser.ClassDeclarationContext ctx) {
+        ClassDef classDef = new ClassDef(ctx.scope);
+        System.out.println(ctx.scope);
+        return classDef;
     }
 }

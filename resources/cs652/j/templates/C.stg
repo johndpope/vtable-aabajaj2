@@ -24,6 +24,7 @@ object *alloc(metadata *clazz) {
 >>
 
 ClassDef(class, fields, methods, vtable) ::= <<
+
 >>
 
 MethodDef(m,funcName,returnType,args,body) ::= <<
@@ -52,7 +53,7 @@ ObjectTypeSpec(o)   ::= ""
 PrimitiveTypeSpec(p)::= "<p.name>"
 
 AssignStat(a,left,right) ::= <<
-<a.left> = <a.right>;
+<left> = <right>;
 
 >>
 PrintStringStat(p)  ::= <<
@@ -62,7 +63,7 @@ PrintStat(p,args)   ::= <<
 printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
 >>
 CallStat(c,call)    ::= ""
-CtorCall(ctor)      ::= "new <ctor> ()"
+CtorCall(ctor)      ::= " <ctor> ()"
 ReturnStat(r,expr)  ::= "return <expr>"
 WhileStat(w,condition, stat) ::= <<
 while<w.condition> <w.stat>

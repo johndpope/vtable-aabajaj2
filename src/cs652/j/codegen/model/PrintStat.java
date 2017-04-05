@@ -1,7 +1,5 @@
 package cs652.j.codegen.model;
 
-import cs652.j.parser.JParser;
-
 import java.util.ArrayList;
 import java.util.List;
 
