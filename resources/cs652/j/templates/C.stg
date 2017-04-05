@@ -24,7 +24,23 @@ object *alloc(metadata *clazz) {
 >>
 
 ClassDef(class, fields, methods, vtable) ::= <<
+typedef struct {
+    metadata *clazz;
+} <class.name>;
 
+#define T_foo_SLOT 0
+
+
+void T_foo(T *this, int x, float y)
+{
+    printf("%d %f\n", x, y);
+}
+
+void (*T_vtable[])() = {
+    (void (*)())&T_foo
+};
+
+metadata T_metadata = {"T", sizeof(T), &T_vtable};
 >>
 
 MethodDef(m,funcName,returnType,args,body) ::= <<
@@ -63,7 +79,7 @@ PrintStat(p,args)   ::= <<
 printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
 >>
 CallStat(c,call)    ::= ""
-CtorCall(ctor)      ::= " <ctor> ()"
+CtorCall(ctor)      ::= " ((<ctor.name> *)alloc(&<ctor.name>_metadata))"
 ReturnStat(r,expr)  ::= "return <expr>"
 WhileStat(w,condition, stat) ::= <<
 while<w.condition> <w.stat>

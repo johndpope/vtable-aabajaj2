@@ -84,7 +84,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
-        System.out.println();
+        System.out.println("Expr = "+ctx.expression(0).getText());
         AssignStat as = new AssignStat((Expr) visit(ctx.expression(0)),(Expr) visit(ctx.expression(1)));
         return as;
     }
@@ -141,7 +141,8 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitCtorCall(JParser.CtorCallContext ctx) {
         CtorCall ctorCall = new CtorCall();
-        ctorCall.ctor = visit(ctx.ID());
+        System.out.println("Ctx- "+ctx.ID());
+        ctorCall.name = ctx.ID().getText();
         return ctorCall;
     }
 
