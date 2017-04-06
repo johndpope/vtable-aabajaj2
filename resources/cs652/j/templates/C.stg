@@ -56,7 +56,8 @@ int main(int argc, char *argv[]){
 >>
 
 Block(block, locals, instrs) ::= <<
-<locals :{ local | <local> }; separator = ";\n">
+<locals :{ local | <local> }; separator = ";">
+
 >>
 
 VarDef(var, type)   ::= <<
@@ -70,7 +71,7 @@ ObjectTypeSpec(o)   ::= "<o.type> *"
 PrimitiveTypeSpec(p)::= "<p.type>"
 
 AssignStat(a,left,right) ::= <<
-<left> = <right>;
+<left> = <right>
 
 >>
 PrintStringStat(p)  ::= <<
