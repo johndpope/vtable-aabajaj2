@@ -56,11 +56,11 @@ int main(int argc, char *argv[]){
 >>
 
 Block(block, locals, instrs) ::= <<
-<locals>
+<locals :{ local | <local> }; separator = ";\n">
 >>
 
 VarDef(var, type)   ::= <<
-<type> <var.id>;
+<type> <var.id>
 
 >>
 
@@ -81,7 +81,7 @@ printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
 >>
 CallStat(c,call)    ::= ""
 CtorCall(ctor)      ::= " ((<ctor.name> *)alloc(&<ctor.name>_metadata))"
-ReturnStat(r,expr)  ::= "return <expr>"
+ReturnStat(r,expr)  ::= "return <expr>;"
 WhileStat(w,condition, stat) ::= <<
 while<w.condition> <w.stat>
 >>

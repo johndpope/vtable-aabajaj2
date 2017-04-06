@@ -4,7 +4,6 @@ import cs652.j.codegen.model.*;
 import cs652.j.parser.JBaseVisitor;
 import cs652.j.parser.JParser;
 import cs652.j.semantics.JClass;
-import cs652.j.semantics.JMethod;
 import org.antlr.symtab.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
@@ -70,7 +69,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitLocalVariableDeclaration(JParser.LocalVariableDeclarationContext ctx) {
         VarDef varDef;
-        System.out.println("VarDef= "+ctx.jType().getText());
+//        System.out.println("VarDef= "+ctx.jType().getText());
         TypeSpec t;
         String typename = ctx.jType().getText();
         if ( isClassName(typename) ) {
@@ -143,7 +142,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitReturnStat(JParser.ReturnStatContext ctx) {
         ReturnStat returnStat = new ReturnStat();
         if (ctx.expression()!=null) {
-            System.out.println(ctx.expression().getText());
             returnStat.expr = (Expr) visit(ctx.expression());
             return returnStat;
         }else {
@@ -187,7 +185,24 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
         methodDef.body = (Block) visit(ctx.methodBody());
         methodDef.funcName = funcName;
-        System.out.println("methodbod = "+ctx.methodBody().getText());
+        TypeSpec t;
+        VarDef varDef;
+        String tName;
+        if (ctx.jType()!=null) {
+            tName = ctx.scope.getEnclosingScope().getName();
+        }else {
+            tName = "void";
+        }
+        if ( isClassName(tName) ) {
+            t =  new ObjectTypeSpec(tName);
+        }
+        else {
+            t = new PrimitiveTypeSpec(tName);
+        }
+        varDef = new VarDef(t,"this");
+        methodDef.args.add(varDef);
+//        for(JParser.LocalVariableDeclarationContext : ctx.)
+        System.out.println("methodbody = "+ctx.methodBody().getText());
         return methodDef;
     }
 
@@ -200,7 +215,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitClassDeclaration(JParser.ClassDeclarationContext ctx) {
         ClassDef classDef = new ClassDef(ctx.scope);
         currentScope = ctx.scope;
-        currentClass = (JClass) ctx.scope;
+        currentClass = ctx.scope;
         for (JParser.ClassBodyDeclarationContext c : ctx.classBody().classBodyDeclaration()){
             MethodDef methodDef;
             methodDef = (MethodDef) visit(c);
