@@ -74,10 +74,10 @@ AssignStat(a,left,right) ::= <<
 <left> = <right>;
 >>
 PrintStringStat(p)  ::= <<
-printf(<p.print>)
+printf(<p.print>);
 >>
 PrintStat(p,args)   ::= <<
-printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">)
+printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
 >>
 CallStat(c,call)    ::= ""
 CtorCall(ctor)      ::= " ((<ctor.name> *)alloc(&<ctor.name>_metadata))"

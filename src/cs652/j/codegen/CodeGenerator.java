@@ -74,7 +74,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitLocalVariableDeclaration(JParser.LocalVariableDeclarationContext ctx) {
         VarDef varDef;
-//        System.out.println("VarDef= "+ctx.jType().getText());
         TypeSpec t;
         String typename = ctx.jType().getText();
         if ( isClassName(typename) ) {
@@ -105,7 +104,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
-//        System.out.println("Expr = "+ctx.expression(0).getText());
         AssignStat as = new AssignStat((Expr) visit(ctx.expression(0)),(Expr) visit(ctx.expression(1)));
         return as;
     }
@@ -212,9 +210,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                 methodDef.args.add((VarDef) visit(c));
             }
         }
-
-//        for(JParser.LocalVariableDeclarationContext : ctx.)
-        System.out.println("methodbody = "+ctx.methodBody().getText());
         return methodDef;
     }
 
