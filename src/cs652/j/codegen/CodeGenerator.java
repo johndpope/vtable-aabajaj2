@@ -143,7 +143,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitReturnStat(JParser.ReturnStatContext ctx) {
         ReturnStat returnStat = new ReturnStat();
         if (ctx.expression()!=null) {
-//            System.out.println("exp="+ctx.expression().getText());
+            System.out.println(ctx.expression().getText());
             returnStat.expr = (Expr) visit(ctx.expression());
             return returnStat;
         }else {
