@@ -4,7 +4,7 @@ import cs652.j.codegen.model.*;
 import cs652.j.parser.JBaseVisitor;
 import cs652.j.parser.JParser;
 import cs652.j.semantics.JClass;
-import cs652.j.semantics.JPrimitiveType;
+import cs652.j.semantics.JMethod;
 import org.antlr.symtab.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
@@ -33,6 +33,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	public OutputModelObject visitFile(JParser.FileContext ctx) {
 		MainMethod main = (MainMethod) visit(ctx.main());
 		CFile file = new CFile(fileName);
+        currentScope = ctx.scope;
         file.main = main;
         for (JParser.ClassDeclarationContext c : ctx.classDeclaration()) {
             ClassDef clazz = (ClassDef) visit(c);
@@ -44,6 +45,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	@Override
 	public OutputModelObject visitMain(JParser.MainContext ctx) {
 		MainMethod mainMethod = new MainMethod();
+        currentScope = ctx.scope;
         mainMethod.body = (Block) visit(ctx.block());
         return mainMethod;
 	}
@@ -51,10 +53,12 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	@Override
 	public OutputModelObject visitBlock(JParser.BlockContext ctx) {
         Block block = new Block();
+        currentScope = ctx.scope;
         for (JParser.StatementContext stat : ctx.statement()) {
             OutputModelObject smt = visit(stat);
             block.locals.add(smt);
         }
+        currentScope = currentScope.getEnclosingScope();
         return block;
     }
 
@@ -65,7 +69,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitLocalVariableDeclaration(JParser.LocalVariableDeclarationContext ctx) {
-        VarDef varDef;//= new VarDef((TypeSpec) visit(ctx.jType()), ctx.ID().getText());
+        VarDef varDef;
         System.out.println("VarDef= "+ctx.jType().getText());
         TypeSpec t;
         String typename = ctx.jType().getText();
@@ -138,8 +142,14 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitReturnStat(JParser.ReturnStatContext ctx) {
         ReturnStat returnStat = new ReturnStat();
-        returnStat.e = visit(ctx.expression());
-        return returnStat;
+        if (ctx.expression()!=null) {
+//            System.out.println("exp="+ctx.expression().getText());
+            returnStat.expr = (Expr) visit(ctx.expression());
+            return returnStat;
+        }else {
+
+            return returnStat;
+        }
     }
 
     @Override
@@ -160,18 +170,37 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitMethodDeclaration(JParser.MethodDeclarationContext ctx) {
         MethodDef methodDef = new MethodDef();
+        currentScope = ctx.scope;
+        String typename;
         FuncName funcName = new FuncName();
-        funcName.slotNumber = ctx.scope.getSlotNumber();
-//        funcName.name = ctx.scope.getEnclosingScope().getName()+"_"+ctx.scope.getName();
-//        System.out.println("Funcname  = "+funcName.name);
-//        methodDef.args = visit(ctx.getText())
+        funcName.className = ctx.scope.getEnclosingScope().getName();
+        funcName.methodName = ctx.ID().getText();
+        if (ctx.jType()!=null) {
+            typename = ctx.jType().getText();
+        }else {
+            typename = "void";
+        }
+        if (isClassName(typename)) {
+            methodDef.returnType = new ObjectTypeSpec(typename);
+        } else {
+            methodDef.returnType = new PrimitiveTypeSpec(typename);
+        }
+        methodDef.body = (Block) visit(ctx.methodBody());
+        methodDef.funcName = funcName;
+        System.out.println("methodbod = "+ctx.methodBody().getText());
         return methodDef;
+    }
+
+    @Override
+    public OutputModelObject visitMethodBody(JParser.MethodBodyContext ctx) {
+        return visit(ctx.block());
     }
 
     @Override
     public OutputModelObject visitClassDeclaration(JParser.ClassDeclarationContext ctx) {
         ClassDef classDef = new ClassDef(ctx.scope);
         currentScope = ctx.scope;
+        currentClass = (JClass) ctx.scope;
         for (JParser.ClassBodyDeclarationContext c : ctx.classBody().classBodyDeclaration()){
             MethodDef methodDef;
             methodDef = (MethodDef) visit(c);
@@ -186,10 +215,27 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                 classDef.define.add("#define "+ funcName.className+"_"+funcName.methodName +"_SLOT "+String.valueOf(m.getSlotNumber()));
             }
         }
-
         return classDef;
     }
+
     public boolean isClassName(String typename) {
         return Character.isUpperCase(typename.charAt(0));
     }
+
+//    @Override
+//    public OutputModelObject visitQMethodCall(JParser.QMethodCallContext ctx) {
+//        MethodCall methodCall = new MethodCall();
+//        FuncPtrType funcPtrType = new FuncPtrType();
+//        JClass jClass = getClassfromCtx(ctx).scope.
+//        JMethod jMethod = (JMethod) currentClass.resolveMethod(ctx.ID().getText());
+////        funcPtrType.returnType = ctx.type;
+////        System.out.println("in Qmethod call= "+currentScope.getEnclosingScope());
+//        System.out.println("in Qmethod call= "+ctx.expression().getText());
+//
+//        return methodCall;
+//    }
+
+//    private JParser.BlockContext getClassfromCtx(JParser.QMethodCallContext ctx) {
+//        return getClassfromCtx((JParser.BlockContext) ctx.getParent());
+//    }
 }
