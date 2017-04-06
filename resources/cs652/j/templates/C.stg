@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
 >>
 
 Block(block, locals, instrs) ::= <<
-<locals :{ local | <local> }; separator = ";">
+<locals :{ local | <local>; }; separator = "\n">
 
 >>
 
@@ -75,14 +75,14 @@ AssignStat(a,left,right) ::= <<
 
 >>
 PrintStringStat(p)  ::= <<
-printf(<p.print>);
+printf(<p.print>)
 >>
 PrintStat(p,args)   ::= <<
-printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
+printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">)
 >>
 CallStat(c,call)    ::= ""
 CtorCall(ctor)      ::= " ((<ctor.name> *)alloc(&<ctor.name>_metadata))"
-ReturnStat(r,expr)  ::= "return <expr>;"
+ReturnStat(r,expr)  ::= "return <expr>"
 WhileStat(w,condition, stat) ::= <<
 while<w.condition> <w.stat>
 >>
