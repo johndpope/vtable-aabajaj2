@@ -70,7 +70,7 @@ ObjectTypeSpec(o)   ::= "<o.type> *"
 PrimitiveTypeSpec(p)::= "<p.type>"
 
 AssignStat(a,left,right) ::= <<
-<left> = <right>
+<left> = <right>;
 >>
 PrintStringStat(p)  ::= <<
 printf(<p.print>)

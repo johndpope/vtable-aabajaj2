@@ -54,8 +54,13 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         Block block = new Block();
         currentScope = ctx.scope;
         for (JParser.StatementContext stat : ctx.statement()) {
-            OutputModelObject smt = visit(stat);
-            block.locals.add(smt);
+            if(stat instanceof JParser.LocalVarStatContext) {
+                OutputModelObject smt = visit(stat);
+                block.locals.add(smt);
+            }else {
+                OutputModelObject smt = visit(stat);
+                block.instrs.add(smt);
+            }
         }
         currentScope = currentScope.getEnclosingScope();
         return block;
