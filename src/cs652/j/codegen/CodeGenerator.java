@@ -4,10 +4,13 @@ import cs652.j.codegen.model.*;
 import cs652.j.parser.JBaseVisitor;
 import cs652.j.parser.JParser;
 import cs652.j.semantics.JClass;
+import cs652.j.semantics.JPrimitiveType;
 import org.antlr.symtab.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
+
+import java.lang.reflect.Method;
 
 public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	public STGroup templates;
@@ -62,7 +65,17 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitLocalVariableDeclaration(JParser.LocalVariableDeclarationContext ctx) {
-        VarDef varDef = new VarDef(ctx.jType().getText(), ctx.ID().getText());
+        VarDef varDef;//= new VarDef((TypeSpec) visit(ctx.jType()), ctx.ID().getText());
+        System.out.println("VarDef= "+ctx.jType().getText());
+        TypeSpec t;
+        String typename = ctx.jType().getText();
+        if ( isClassName(typename) ) {
+            t =  new ObjectTypeSpec(typename);
+        }
+        else {
+            t = new PrimitiveTypeSpec(typename);
+        }
+        varDef = new VarDef(t,ctx.ID().getText());
         return varDef;
     }
 
@@ -76,7 +89,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitPrintStat(JParser.PrintStatContext ctx) {
         PrintStat ps = new PrintStat(ctx.STRING().getText());
         for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
-            OutputModelObject args = (OutputModelObject) visit(e);
+            OutputModelObject args = visit(e);
             ps.args.add(args);
         }
         return ps;
@@ -84,7 +97,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
-        System.out.println("Expr = "+ctx.expression(0).getText());
+//        System.out.println("Expr = "+ctx.expression(0).getText());
         AssignStat as = new AssignStat((Expr) visit(ctx.expression(0)),(Expr) visit(ctx.expression(1)));
         return as;
     }
@@ -98,7 +111,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitLiteralRef(JParser.LiteralRefContext ctx) {
         LiteralRef lr = new LiteralRef(ctx.getText());
-//        System.out.println(ctx.getText());
         return  lr;
     }
 
@@ -141,7 +153,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitCtorCall(JParser.CtorCallContext ctx) {
         CtorCall ctorCall = new CtorCall();
-        System.out.println("Ctx- "+ctx.ID());
         ctorCall.name = ctx.ID().getText();
         return ctorCall;
     }
@@ -149,13 +160,36 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitMethodDeclaration(JParser.MethodDeclarationContext ctx) {
         MethodDef methodDef = new MethodDef();
+        FuncName funcName = new FuncName();
+        funcName.slotNumber = ctx.scope.getSlotNumber();
+//        funcName.name = ctx.scope.getEnclosingScope().getName()+"_"+ctx.scope.getName();
+//        System.out.println("Funcname  = "+funcName.name);
+//        methodDef.args = visit(ctx.getText())
         return methodDef;
     }
 
     @Override
     public OutputModelObject visitClassDeclaration(JParser.ClassDeclarationContext ctx) {
         ClassDef classDef = new ClassDef(ctx.scope);
-        System.out.println(ctx.scope);
+        currentScope = ctx.scope;
+        for (JParser.ClassBodyDeclarationContext c : ctx.classBody().classBodyDeclaration()){
+            MethodDef methodDef;
+            methodDef = (MethodDef) visit(c);
+            classDef.methods.add(methodDef);
+        }
+        for(MethodSymbol m : ctx.scope.getMethods()){
+            FuncName funcName = new FuncName();
+            funcName.methodName = m.getName();
+            funcName.className = ctx.scope.resolve(m.getEnclosingScope().getName()).getName();
+            if(!classDef.vtable.contains(funcName)){
+                classDef.vtable.add(funcName);
+                classDef.define.add("#define "+ funcName.className+"_"+funcName.methodName +"_SLOT "+String.valueOf(m.getSlotNumber()));
+            }
+        }
+
         return classDef;
+    }
+    public boolean isClassName(String typename) {
+        return Character.isUpperCase(typename.charAt(0));
     }
 }

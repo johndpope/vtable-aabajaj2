@@ -5,9 +5,9 @@ package cs652.j.codegen.model;
  */
 public class VarDef extends OutputModelObject {
 //    @ModelElement
-    @ModelElement public String type;
+    @ModelElement public TypeSpec type;
     public String id;
-    public VarDef (String t, String i){
+    public VarDef (TypeSpec t, String i){
         type = t;
         id = i;
     }

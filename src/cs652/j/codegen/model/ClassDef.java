@@ -13,9 +13,10 @@ public class ClassDef extends OutputModelObject{
     @ModelElement public List<VarDef> fields = new ArrayList<>();
     @ModelElement public List<MethodDef> methods = new ArrayList<>();
     @ModelElement public List<FuncName> vtable = new ArrayList<>();
-
+    public List<String> define = new ArrayList<>();
     public ClassDef(JClass jClass){ this.clazz = jClass;}
 
     public String getName(){return clazz.getName();}
+
 
 }

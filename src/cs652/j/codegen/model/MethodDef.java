@@ -6,6 +6,6 @@ import java.util.List;
  * Created by Anjani Bajaj on 4/4/2017.
  */
 public class MethodDef extends OutputModelObject {
-    @ModelElement String args;
-    @ModelElement Block body;
+    public @ModelElement String args;
+    public @ModelElement Block body;
 }

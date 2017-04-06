@@ -26,21 +26,18 @@ object *alloc(metadata *clazz) {
 ClassDef(class, fields, methods, vtable) ::= <<
 typedef struct {
     metadata *clazz;
+    <fields>
 } <class.name>;
 
-#define T_foo_SLOT 0
+<class.define :{ defin | <defin>}; separator = "\n">
 
+<methods>
 
-void T_foo(T *this, int x, float y)
-{
-    printf("%d %f\n", x, y);
-}
-
-void (*T_vtable[])() = {
-    (void (*)())&T_foo
+void (*<class.name>_vtable[])() = {
+    <vtable :{ f | (void (*)())&<f> }; separator = ", ">
 };
 
-metadata T_metadata = {"T", sizeof(T), &T_vtable};
+metadata <class.name>_metadata = {"<class.clazz.name>", sizeof(<class.name>), &<class.name>_vtable};
 >>
 
 MethodDef(m,funcName,returnType,args,body) ::= <<
@@ -59,14 +56,14 @@ Block(block, locals, instrs) ::= <<
 >>
 
 VarDef(var, type)   ::= <<
-<var.type> <var.id>;
+<type> <var.id>;
 
 >>
 
-FuncName(f)         ::= "<f.name>"
+FuncName(f)         ::= "<f.className>_<f.methodName>"
 
-ObjectTypeSpec(o)   ::= ""
-PrimitiveTypeSpec(p)::= "<p.name>"
+ObjectTypeSpec(o)   ::= "<o.type> *"
+PrimitiveTypeSpec(p)::= "<p.type>"
 
 AssignStat(a,left,right) ::= <<
 <left> = <right>;
