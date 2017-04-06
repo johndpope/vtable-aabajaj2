@@ -56,13 +56,12 @@ int main(int argc, char *argv[]){
 >>
 
 Block(block, locals, instrs) ::= <<
-<locals :{ local | <local>; }; separator = "\n">
-
+<locals :{ local | <local>;}; separator = "\n">
+<instrs>
 >>
 
 VarDef(var, type)   ::= <<
 <type> <var.id>
-
 >>
 
 FuncName(f)         ::= "<f.className>_<f.methodName>"
@@ -72,7 +71,6 @@ PrimitiveTypeSpec(p)::= "<p.type>"
 
 AssignStat(a,left,right) ::= <<
 <left> = <right>
-
 >>
 PrintStringStat(p)  ::= <<
 printf(<p.print>)
