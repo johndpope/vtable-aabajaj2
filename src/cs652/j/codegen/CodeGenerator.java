@@ -206,6 +206,13 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
         varDef = new VarDef(t,"this");
         methodDef.args.add(varDef);
+        if(ctx.formalParameters().formalParameterList()!=null){
+            for(JParser.FormalParameterContext c: ctx.formalParameters().formalParameterList().formalParameter()){
+                System.out.println("FOrnam= "+c.getText());
+                methodDef.args.add((VarDef) visit(c));
+            }
+        }
+
 //        for(JParser.LocalVariableDeclarationContext : ctx.)
         System.out.println("methodbody = "+ctx.methodBody().getText());
         return methodDef;
@@ -242,7 +249,23 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         return Character.isUpperCase(typename.charAt(0));
     }
 
-//    @Override
+    @Override
+    public OutputModelObject visitFormalParameter(JParser.FormalParameterContext ctx) {
+        VarDef varDef;
+//        System.out.println("VarDef= "+ctx.jType().getText());
+        TypeSpec t;
+        String typename = ctx.jType().getText();
+        if ( isClassName(typename) ) {
+            t =  new ObjectTypeSpec(typename);
+        }
+        else {
+            t = new PrimitiveTypeSpec(typename);
+        }
+        varDef = new VarDef(t,ctx.ID().getText());
+        return varDef;
+    }
+
+    //    @Override
 //    public OutputModelObject visitQMethodCall(JParser.QMethodCallContext ctx) {
 //        MethodCall methodCall = new MethodCall();
 //        FuncPtrType funcPtrType = new FuncPtrType();

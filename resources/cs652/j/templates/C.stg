@@ -24,6 +24,7 @@ object *alloc(metadata *clazz) {
 >>
 
 ClassDef(class, fields, methods, vtable) ::= <<
+// D e f i n e  C l a s s  <class.name>
 typedef struct {
     metadata *clazz;
     <fields>
@@ -80,7 +81,7 @@ printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">)
 >>
 CallStat(c,call)    ::= ""
 CtorCall(ctor)      ::= " ((<ctor.name> *)alloc(&<ctor.name>_metadata))"
-ReturnStat(r,expr)  ::= "return <expr>"
+ReturnStat(r,expr)  ::= "return <expr>;"
 WhileStat(w,condition, stat) ::= <<
 while<w.condition> <w.stat>
 >>
