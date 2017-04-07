@@ -378,7 +378,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
                         TypeCast typeCast = new TypeCast();
-                        //System.out.println("VS="+varRef.id);
                         String ty5 = ctx.expression().type.getName();
 
                         if(isClassName(ty5))
@@ -400,7 +399,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                         methodCall.args.add(ctorCall);
                     }
                 }
-           // }
         }
         return methodCall;
     }
@@ -423,9 +421,9 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         MethodCall methodCall = new MethodCall();
         FuncPtrType funcPtrType = new FuncPtrType();
         methodCall.name = ctx.ID().getText();
-        methodCall.receiverType = currentClass.getName();
         methodCall.className = currentClass.getName();
         MethodSymbol methodSymbol = currentClass.resolveMethod(ctx.ID().getText());
+        methodCall.receiverType = methodSymbol.getEnclosingScope().getName();
         TypeSpec t;
         String typename = methodSymbol.getType().getName();
         if ( isClassName(typename) ) {
@@ -440,7 +438,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         methodCall.fptrType = funcPtrType;
         funcPtrType.argTypes.add(new ObjectTypeSpec(currentClass.getName()));
         if(ctx.expressionList()!=null) {
-//            if(ctx.expressionList()!=null) {
             for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                 String ty = e.type.getName();
                 if(isClassName(ty))
@@ -473,7 +470,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                     methodCall.args.add(ctorCall);
                 }
             }
-            // }
         }
         return methodCall;
     }
