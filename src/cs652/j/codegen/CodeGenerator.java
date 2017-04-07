@@ -131,9 +131,11 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             String tn = ctx.expression(0).type.getName();
             if ( isClassName(tn)) {
                 typeCast.type =  new ObjectTypeSpec(tn);
+                typeCast.expr = (Expr) right;
             }
             else {
                 typeCast.type = new PrimitiveTypeSpec(tn);
+                typeCast.expr = (Expr) right;
             }
             as = new AssignStat(l,typeCast);
         } else {
@@ -372,7 +374,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                 for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
-
                         methodCall.args.add(varRef);
                     } else if(visit(e) instanceof LiteralRef){
                         LiteralRef literalRef = (LiteralRef) visit(e);
