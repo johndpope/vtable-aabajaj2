@@ -342,7 +342,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         methodCall.className = jClass.getName();
         methodCall.receiverType = methodSymbol.getEnclosingScope().getName();
         methodCall.name = ctx.ID().getText();
-
+        
         TypeSpec t;
         String typename = methodSymbol.getType().getName();
         if ( isClassName(typename) ) {
@@ -367,17 +367,28 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             if(ctx.expression().type!=null && ctx.expressionList()!=null) {
 //            if(ctx.expressionList()!=null) {
                 for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
+                    String ty = e.type.getName();
+                    if(isClassName(ty))
+                    {
+                        funcPtrType.argTypes.add(new ObjectTypeSpec(ty));
+                    }
+                    else {
+                        funcPtrType.argTypes.add(new PrimitiveTypeSpec(ty));
+                    }
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
                         TypeCast typeCast = new TypeCast();
                         //System.out.println("VS="+varRef.id);
-                        String ty = ctx.expression().type.getName();
-                        if(isClassName(ty))
+                        String ty5 = ctx.expression().type.getName();
+
+                        if(isClassName(ty5))
                         {
-                            typeCast.type = new ObjectTypeSpec(ty);
+                            typeCast.type = new ObjectTypeSpec(ty5);
+                            funcPtrType.argTypes.add(new ObjectTypeSpec(ty5));
                         }
                         else {
-                            typeCast.type = new PrimitiveTypeSpec(ty);
+                            typeCast.type = new PrimitiveTypeSpec(ty5);
+                            funcPtrType.argTypes.add(new PrimitiveTypeSpec(ty5));
                         }
                         typeCast.expr = varRef;
                         methodCall.args.add(typeCast);
@@ -431,16 +442,26 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         if(ctx.expressionList()!=null) {
 //            if(ctx.expressionList()!=null) {
             for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
+                String ty = e.type.getName();
+                if(isClassName(ty))
+                {
+                    funcPtrType.argTypes.add(new ObjectTypeSpec(ty));
+                }
+                else {
+                    funcPtrType.argTypes.add(new PrimitiveTypeSpec(ty));
+                }
                 if (visit(e) instanceof VarRef) {
                     VarRef varRef2 = (VarRef) visit(e);
                     TypeCast typeCast = new TypeCast();
-                    String ty = e.type.getName();
-                    if(isClassName(ty))
+                    String ty2 = e.type.getName();
+                    if(isClassName(ty2))
                     {
-                        typeCast.type = new ObjectTypeSpec(ty);
+                        typeCast.type = new ObjectTypeSpec(ty2);
+                        funcPtrType.argTypes.add(new ObjectTypeSpec(ty2));
                     }
                     else {
-                        typeCast.type = new PrimitiveTypeSpec(ty);
+                        typeCast.type = new PrimitiveTypeSpec(ty2);
+                        funcPtrType.argTypes.add(new PrimitiveTypeSpec(ty2));
                     }
                     typeCast.expr = varRef2;
                     methodCall.args.add(typeCast);
