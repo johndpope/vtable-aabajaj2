@@ -72,7 +72,6 @@ PrimitiveTypeSpec(p)::= "<p.type>"
 
 AssignStat(a,left,right) ::= <<
 <left> = <right>;
-
 >>
 PrintStringStat(p)  ::= <<
 printf(<p.print>);
