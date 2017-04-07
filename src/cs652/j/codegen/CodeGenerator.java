@@ -126,6 +126,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         Expr r = (Expr) visit(ctx.expression(1));
         as = new AssignStat(l,r);
 
+
         return as;
     }
 
@@ -399,6 +400,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         FuncPtrType funcPtrType = new FuncPtrType();
         methodCall.name = ctx.ID().getText();
         methodCall.receiverType = currentClass.getName();
+        methodCall.className = currentClass.getName();
         MethodSymbol methodSymbol = currentClass.resolveMethod(ctx.ID().getText());
         TypeSpec t;
         String typename = methodSymbol.getType().getName();
