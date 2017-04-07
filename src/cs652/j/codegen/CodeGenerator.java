@@ -36,12 +36,8 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitFieldRef(JParser.FieldRefContext ctx) {
         FieldRef fieldRef = new FieldRef();
-//        System.out.println("In fieldRef="+ctx.expression().getText());
         fieldRef.fieldName = ctx.ID().getText();
         fieldRef.object = (Expr) visit(ctx.expression());
-//        System.out.println("Classname= "+currentScope.getEnclosingScope().getName());
-//        if(ctx)
-//        fieldRef.object = currentClass.resolve(ctx)
         return fieldRef;
     }
 
@@ -121,7 +117,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
-        AssignStat as ;//= new AssignStat((Expr) visit(ctx.expression(0)),(Expr) visit(ctx.expression(1)));
+        AssignStat as ;
         Expr l = (Expr) visit(ctx.expression(0));
         Expr r = (Expr) visit(ctx.expression(1));
         OutputModelObject right = visit(ctx.expression(1));
@@ -239,13 +235,10 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         else {
             t = new PrimitiveTypeSpec(tName);
         }
-
-//        System.out.println("Type = "+t.type);
         varDef = new VarDef(t,"this");
         methodDef.args.add(varDef);
         if(ctx.formalParameters().formalParameterList()!=null){
             for(JParser.FormalParameterContext c: ctx.formalParameters().formalParameterList().formalParameter()){
-//                System.out.println("Formal= "+c.getText());
                 methodDef.args.add((VarDef) visit(c));
             }
         }
@@ -279,12 +272,10 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         currentClass = ctx.scope;
         for (JParser.ClassBodyDeclarationContext c : ctx.classBody().classBodyDeclaration()){
             if(visit(c) instanceof VarDef){
-                 //classDef.fields.add((VarDef) visit(c));
             }else {
                 MethodDef methodDef;
                 methodDef = (MethodDef) visit(c);
                 classDef.methods.add(methodDef);
-//                System.out.println("Fields size="+currentClass.getFields().size());
             }
         }
 
@@ -365,7 +356,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
             funcPtrType.argTypes.add(new ObjectTypeSpec(methodSymbol.getEnclosingScope().getName()));
             if(ctx.expression().type!=null && ctx.expressionList()!=null) {
-//            if(ctx.expressionList()!=null) {
                 for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                     String ty = e.type.getName();
                     if(isClassName(ty))
@@ -383,11 +373,9 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                         if(isClassName(ty5))
                         {
                             typeCast.type = new ObjectTypeSpec(ty5);
-                            funcPtrType.argTypes.add(new ObjectTypeSpec(ty5));
                         }
                         else {
                             typeCast.type = new PrimitiveTypeSpec(ty5);
-                            funcPtrType.argTypes.add(new PrimitiveTypeSpec(ty5));
                         }
                         typeCast.expr = varRef;
                         methodCall.args.add(typeCast);
@@ -457,11 +445,9 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                     if(isClassName(ty2))
                     {
                         typeCast.type = new ObjectTypeSpec(ty2);
-                        funcPtrType.argTypes.add(new ObjectTypeSpec(ty2));
                     }
                     else {
                         typeCast.type = new PrimitiveTypeSpec(ty2);
-                        funcPtrType.argTypes.add(new PrimitiveTypeSpec(ty2));
                     }
                     typeCast.expr = varRef2;
                     methodCall.args.add(typeCast);
