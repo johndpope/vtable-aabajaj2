@@ -10,6 +10,8 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
+import java.util.List;
+
 
 public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	public STGroup templates;
@@ -214,7 +216,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             t = new PrimitiveTypeSpec(tName);
         }
 
-        System.out.println("Type = "+t.type);
+//        System.out.println("Type = "+t.type);
         varDef = new VarDef(t,"this");
         methodDef.args.add(varDef);
         if(ctx.formalParameters().formalParameterList()!=null){
@@ -253,11 +255,13 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         currentClass = ctx.scope;
         for (JParser.ClassBodyDeclarationContext c : ctx.classBody().classBodyDeclaration()){
             if(visit(c) instanceof VarDef){
-                classDef.fields.add((VarDef) visit(c));
+                 //classDef.fields.add((VarDef) visit(c));
             }else {
                 MethodDef methodDef;
                 methodDef = (MethodDef) visit(c);
                 classDef.methods.add(methodDef);
+//                System.out.println("Fields size="+currentClass.getFields().size());
+
             }
         }
 
@@ -270,6 +274,20 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                 classDef.define.add("#define "+ funcName.className+"_"+funcName.methodName +"_SLOT "+String.valueOf(m.getSlotNumber()));
             }
         }
+        for(FieldSymbol a: ctx.scope.getFields() ){
+            VarDef varDef;
+            TypeSpec t;
+            String typename =  a.getType().getName();
+            if ( isClassName(typename) ) {
+                t =  new ObjectTypeSpec(typename);
+            }
+            else {
+                t = new PrimitiveTypeSpec(typename);
+            }
+            varDef = new VarDef(t,a.getName());
+            classDef.fields.add(varDef);
+        }
+
         return classDef;
     }
 
@@ -310,7 +328,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             t = new PrimitiveTypeSpec(typename);
         }
         funcPtrType.returnType = t;
-        System.out.println("Type = "+funcPtrType.returnType.type);
         methodCall.fptrType = funcPtrType;
         if(visit(ctx.expression()) instanceof VarRef) {
             VarRef varRef = (VarRef) visit(ctx.expression());
