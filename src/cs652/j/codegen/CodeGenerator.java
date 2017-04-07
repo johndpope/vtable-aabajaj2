@@ -337,9 +337,12 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         if(visit(ctx.expression()) instanceof VarRef) {
             VarRef varRef = (VarRef) visit(ctx.expression());
             methodCall.receiver = varRef;
-        }else {
+        }else if(visit(ctx.expression()) instanceof  FieldRef) {
             FieldRef fieldRef = (FieldRef) visit(ctx.expression());
             methodCall.receiver = fieldRef;
+        } else {
+            ThisRef thisRef = (ThisRef) visit(ctx.expression());
+            methodCall.receiver = thisRef;
         }
             funcPtrType.argTypes.add(new ObjectTypeSpec(jClass.getName()));
             if(ctx.expression().type!=null && ctx.expressionList()!=null) {
