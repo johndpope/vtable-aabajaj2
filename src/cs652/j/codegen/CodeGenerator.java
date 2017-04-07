@@ -30,10 +30,10 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitFieldRef(JParser.FieldRefContext ctx) {
         FieldRef fieldRef = new FieldRef();
-        System.out.println("In fieldRef="+ctx.expression().getText());
+//        System.out.println("In fieldRef="+ctx.expression().getText());
         fieldRef.fieldName = ctx.ID().getText();
-
-        System.out.println("Classname= "+currentScope.getEnclosingScope().getName());
+        fieldRef.object = (Expr) visit(ctx.expression());
+//        System.out.println("Classname= "+currentScope.getEnclosingScope().getName());
 //        if(ctx)
 //        fieldRef.object = currentClass.resolve(ctx)
         return fieldRef;
@@ -230,15 +230,33 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     }
 
     @Override
+    public OutputModelObject visitFieldDeclaration(JParser.FieldDeclarationContext ctx) {
+        VarDef varDef;
+        TypeSpec t;
+        String typename = ctx.jType().getText();
+        if ( isClassName(typename) ) {
+            t =  new ObjectTypeSpec(typename);
+        }
+        else {
+            t = new PrimitiveTypeSpec(typename);
+        }
+        varDef = new VarDef(t,ctx.ID().getText());
+        return varDef;
+    }
+
+    @Override
     public OutputModelObject visitClassDeclaration(JParser.ClassDeclarationContext ctx) {
         ClassDef classDef = new ClassDef(ctx.scope);
         currentScope = ctx.scope;
         currentClass = ctx.scope;
         for (JParser.ClassBodyDeclarationContext c : ctx.classBody().classBodyDeclaration()){
-            MethodDef methodDef;
-            methodDef = (MethodDef) visit(c);
-            classDef.methods.add(methodDef);
-
+            if(visit(c) instanceof VarDef){
+                classDef.fields.add((VarDef) visit(c));
+            }else {
+                MethodDef methodDef;
+                methodDef = (MethodDef) visit(c);
+                classDef.methods.add(methodDef);
+            }
         }
 
         for(MethodSymbol m : ctx.scope.getMethods()){
@@ -271,21 +289,28 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         varDef = new VarDef(t,ctx.ID().getText());
         return varDef;
     }
+        @Override
+    public OutputModelObject visitQMethodCall(JParser.QMethodCallContext ctx) {
+        MethodCall methodCall = new MethodCall();
+        FuncPtrType funcPtrType = new FuncPtrType();
+//        funcPtrType.returnType =
+//      funcPtrType.argTypes
+//        for(JParser.ExpressionContext e: ctx.expressionList().expression())    {
+//            System.out.println("Arguments="+e.getText());
+//            funcPtrType.argTypes.add((LiteralRef) visit(e));
+//        }
 
-    //    @Override
-//    public OutputModelObject visitQMethodCall(JParser.QMethodCallContext ctx) {
-//        MethodCall methodCall = new MethodCall();
-//        FuncPtrType funcPtrType = new FuncPtrType();
-//        JClass jClass = getClassfromCtx(ctx).scope.
-//        JMethod jMethod = (JMethod) currentClass.resolveMethod(ctx.ID().getText());
-//        funcPtrType.returnType = ctx.type;
-//        System.out.println("in Qmethod call= "+currentScope.getEnclosingScope());
-//        System.out.println("in Qmethod call= "+ctx.expression().getText());
-//
-//        return methodCall;
-//    }
+        methodCall.receiver = (VarRef) visit(ctx.expression());
+        System.out.println("VarRef= "+methodCall.receiver.id);
+        System.out.println("in Qmethod call= "+ctx.expression().getText());
+        return methodCall;
+    }
 
-//    private JParser.BlockContext getClassfromCtx(JParser.QMethodCallContext ctx) {
-//        return getClassfromCtx((JParser.BlockContext) ctx.getParent());
-//    }
+    @Override
+    public OutputModelObject visitCallStat(JParser.CallStatContext ctx) {
+        CallStat callStat = new CallStat();
+        Expr e = (Expr) visit(ctx.expression());
+        callStat.call = e;
+        return callStat;
+    }
 }

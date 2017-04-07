@@ -27,7 +27,7 @@ ClassDef(class, fields, methods, vtable) ::= <<
 // D e f i n e  C l a s s  <class.name>
 typedef struct {
     metadata *clazz;
-    <fields>
+    <fields :{ field | <field>;}; separator = "\n">
 } <class.name>;
 
 <class.define :{ defin | <defin>}; separator = "\n">
@@ -80,7 +80,7 @@ printf(<p.print>);
 PrintStat(p,args)   ::= <<
 printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
 >>
-CallStat(c,call)    ::= ""
+CallStat(c,call)    ::= "<call>"
 CtorCall(ctor)      ::= " ((<ctor.name> *)alloc(&<ctor.name>_metadata))"
 ReturnStat(r,expr)  ::= "return <expr>;"
 WhileStat(w,condition, stat) ::= <<
@@ -101,7 +101,7 @@ VarRef(v)           ::= "<v.id>"
 FieldRef(f, object) ::= "<object>-><f.fieldName>"
 ThisRef(t)          ::= "this"
 MethodCall(m, receiver, receiverType, fptrType, args) ::= <<
-<fptrType> (*(<receiver>)->clazz->_vtable)[<m.name>_SLOT])(((<receiverType> *)<receiver>),<args :{ arg | <arg> }; separator = ", ">);"
+<fptrType> (*(<receiver>)->clazz->_vtable)[<m.name>_SLOT])(((<receiverType> *)<receiver.id>),<args :{ arg | <arg> }; separator = ", ">);
 >>
 
 FuncPtrType(f, returnType, argTypes) ::= "(*(<returnType>)(*)(<argTypes>))"
