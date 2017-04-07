@@ -104,5 +104,5 @@ MethodCall(m, receiver, receiverType, fptrType, args) ::= <<
 <fptrType> (*(<receiver>)->clazz->_vtable)[<m.funcName.name>_SLOT])(((<receiverType>)<receiver>),<args :{ arg | <arg> }; separator = ", ">);
 >>
 
-FuncPtrType(f, returnType, argTypes) ::= <<(*(<returnType>)(*)(<argTypes :{ arg | <arg> }; separator = ", ">)>>
+FuncPtrType(f, returnType, argTypes) ::= <<(*(<returnType>(*)(<argTypes :{ arg | <arg> }; separator = ", ">))>>
 TypeCast(cast, type, expr) ::= "<type> <expr>"

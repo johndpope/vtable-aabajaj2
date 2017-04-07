@@ -328,14 +328,12 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             }
             methodCall.receiverType = new ObjectTypeSpec(jClass.getName());
             FuncName funcName = new FuncName();
-//            if(jClass.)
             funcName.className = jClass.getName();
             funcName.methodName = methodSymbol.getName();
             methodCall.funcName = funcName;
             if(ctx.expressionList()!=null) {
                 for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                     System.out.println("Arguments=" + e.getText());
-//                methodCall.args.add((VarRef) visit(e));
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
                         methodCall.args.add(varRef);
