@@ -349,7 +349,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             ThisRef thisRef = (ThisRef) visit(ctx.expression());
             methodCall.receiver = thisRef;
         }
-            funcPtrType.argTypes.add(new ObjectTypeSpec(jClass.getName()));
+            funcPtrType.argTypes.add(new ObjectTypeSpec(methodSymbol.getEnclosingScope().getName()));
             if(ctx.expression().type!=null && ctx.expressionList()!=null) {
             for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                 String tn = e.type.getName();
