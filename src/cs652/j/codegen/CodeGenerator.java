@@ -4,6 +4,7 @@ import cs652.j.codegen.model.*;
 import cs652.j.parser.JBaseVisitor;
 import cs652.j.parser.JParser;
 import cs652.j.semantics.JClass;
+import cs652.j.semantics.JField;
 import org.antlr.symtab.*;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
@@ -121,8 +122,11 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitIdRef(JParser.IdRefContext ctx) {
-        VarRef vr = new VarRef(ctx.ID().getText());
-        return vr;
+        VariableSymbol variableSymbol = (VariableSymbol) currentScope.resolve(ctx.ID().getText());
+        if(variableSymbol instanceof JField){
+            return new VarRef("this->"+ctx.ID().getText());
+        }
+        return new VarRef(ctx.ID().getText());
     }
 
     @Override
