@@ -366,15 +366,14 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
             funcPtrType.argTypes.add(new ObjectTypeSpec(methodSymbol.getEnclosingScope().getName()));
             if(ctx.expression().type!=null && ctx.expressionList()!=null) {
-            for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
-                String tn = e.type.getName();
-
-            }
-            if(ctx.expressionList()!=null) {
+//            if(ctx.expressionList()!=null) {
                 for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
-                        methodCall.args.add(varRef);
+                        TypeCast typeCast = new TypeCast();
+                        VariableSymbol variableSymbol = (VariableSymbol) methodSymbol.resolve(varRef.id);
+                        typeCast.type = new ObjectTypeSpec(variableSymbol.getType().getName());
+                        methodCall.args.add(typeCast);
                     } else if(visit(e) instanceof LiteralRef){
                         LiteralRef literalRef = (LiteralRef) visit(e);
                         methodCall.args.add(literalRef);
@@ -383,7 +382,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                         methodCall.args.add(ctorCall);
                     }
                 }
-            }
+           // }
         }
         return methodCall;
     }
@@ -422,6 +421,25 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         methodCall.receiver = varRef ;
         methodCall.fptrType = funcPtrType;
         funcPtrType.argTypes.add(new ObjectTypeSpec(currentClass.getName()));
+        if(ctx.expressionList()!=null) {
+//            if(ctx.expressionList()!=null) {
+            for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
+                if (visit(e) instanceof VarRef) {
+                    VarRef ref = (VarRef) visit(e);
+                    TypeCast typeCast = new TypeCast();
+                    VariableSymbol variableSymbol = (VariableSymbol) methodSymbol.resolve(ref.id);
+                    typeCast.type = new ObjectTypeSpec(variableSymbol.getType().getName());
+                    methodCall.args.add(typeCast);
+                } else if(visit(e) instanceof LiteralRef){
+                    LiteralRef literalRef = (LiteralRef) visit(e);
+                    methodCall.args.add(literalRef);
+                } else {
+                    CtorCall ctorCall = (CtorCall) visit(e);
+                    methodCall.args.add(ctorCall);
+                }
+            }
+            // }
+        }
         return methodCall;
     }
 }
