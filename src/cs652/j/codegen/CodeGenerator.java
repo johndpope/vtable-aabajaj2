@@ -199,20 +199,18 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
         methodDef.body = (Block) visit(ctx.methodBody());
         methodDef.funcName = funcName;
+
         TypeSpec t;
         VarDef varDef;
-        String tName;
-        if (ctx.jType()!=null) {
-            tName = ctx.scope.getEnclosingScope().getName();
-        }else {
-            tName = "void";
-        }
+        String tName = ctx.scope.getEnclosingScope().getName();
         if ( isClassName(tName) ) {
             t =  new ObjectTypeSpec(tName);
         }
         else {
             t = new PrimitiveTypeSpec(tName);
         }
+
+        System.out.println("Type = "+t.type);
         varDef = new VarDef(t,"this");
         methodDef.args.add(varDef);
         if(ctx.formalParameters().formalParameterList()!=null){
@@ -293,16 +291,63 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitQMethodCall(JParser.QMethodCallContext ctx) {
         MethodCall methodCall = new MethodCall();
         FuncPtrType funcPtrType = new FuncPtrType();
-//        funcPtrType.returnType =
-//      funcPtrType.argTypes
-//        for(JParser.ExpressionContext e: ctx.expressionList().expression())    {
-//            System.out.println("Arguments="+e.getText());
-//            funcPtrType.argTypes.add((LiteralRef) visit(e));
-//        }
+        JClass jClass = (JClass) currentScope.resolve(ctx.expression().type.getName());
+        MethodSymbol methodSymbol = (MethodSymbol) jClass.resolveMember(ctx.ID().getText());
 
-        methodCall.receiver = (VarRef) visit(ctx.expression());
-        System.out.println("VarRef= "+methodCall.receiver.id);
-        System.out.println("in Qmethod call= "+ctx.expression().getText());
+        TypeSpec t;
+        String typename = methodSymbol.getType().getName();
+        if ( isClassName(typename) ) {
+            t =  new ObjectTypeSpec(typename);
+        }
+        else {
+            t = new PrimitiveTypeSpec(typename);
+        }
+        funcPtrType.returnType = t;
+        System.out.println("Type = "+funcPtrType.returnType.type);
+        methodCall.fptrType = funcPtrType;
+        if(visit(ctx.expression()) instanceof VarRef) {
+            VarRef varRef = (VarRef) visit(ctx.expression());
+            methodCall.receiver = varRef;
+        }else {
+            FieldRef fieldRef = (FieldRef) visit(ctx.expression());
+            methodCall.receiver = fieldRef;
+        }
+            funcPtrType.argTypes.add(new ObjectTypeSpec(jClass.getName()));
+            if(ctx.expression().type!=null && ctx.expressionList()!=null) {
+            for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
+                String tn = e.type.getName();
+                TypeSpec t1;
+                if ( isClassName(tn) ) {
+                    t1 =  new ObjectTypeSpec(tn);
+                }
+                else {
+                    t1 = new PrimitiveTypeSpec(tn);
+                }
+                funcPtrType.argTypes.add(t1);
+
+            }
+            methodCall.receiverType = new ObjectTypeSpec(jClass.getName());
+            FuncName funcName = new FuncName();
+//            if(jClass.)
+            funcName.className = jClass.getName();
+            funcName.methodName = methodSymbol.getName();
+            methodCall.funcName = funcName;
+            if(ctx.expressionList()!=null) {
+                for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
+                    System.out.println("Arguments=" + e.getText());
+//                methodCall.args.add((VarRef) visit(e));
+                    if (visit(e) instanceof VarRef) {
+                        VarRef varRef = (VarRef) visit(e);
+                        methodCall.args.add(varRef);
+                    } else {
+                        LiteralRef literalRef = (LiteralRef) visit(e);
+                        System.out.println("fds="+literalRef.id);
+                        methodCall.args.add(literalRef);
+                    }
+                }
+            }
+        }
+
         return methodCall;
     }
 

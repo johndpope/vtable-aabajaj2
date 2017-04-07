@@ -7,5 +7,8 @@ public class FuncName extends OutputModelObject {
     public  String className;
     public  String methodName;
     public int slotNumber;
+    public String getName(){
+        return this.className+"_"+this.methodName;
+    }
 
 }
