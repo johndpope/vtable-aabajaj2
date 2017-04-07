@@ -29,6 +29,11 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	}
 
     @Override
+    public OutputModelObject visitThisRef(JParser.ThisRefContext ctx) {
+        return new ThisRef();
+    }
+
+    @Override
     public OutputModelObject visitFieldRef(JParser.FieldRefContext ctx) {
         FieldRef fieldRef = new FieldRef();
 //        System.out.println("In fieldRef="+ctx.expression().getText());
@@ -122,12 +127,14 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitIdRef(JParser.IdRefContext ctx) {
-        VariableSymbol variableSymbol = (VariableSymbol) currentScope.resolve(ctx.ID().getText());
-        if(variableSymbol instanceof JField){
+        TypedSymbol typedSymbol = (TypedSymbol) currentScope.resolve(ctx.ID().getText());
+        if(typedSymbol instanceof JField){
             return new VarRef("this->"+ctx.ID().getText());
+        }else {
+            return new VarRef(ctx.ID().getText());
         }
-        return new VarRef(ctx.ID().getText());
     }
+
 
     @Override
     public OutputModelObject visitLiteralRef(JParser.LiteralRefContext ctx) {
