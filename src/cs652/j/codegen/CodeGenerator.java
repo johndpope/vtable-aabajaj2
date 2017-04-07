@@ -294,6 +294,9 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         JClass jClass = (JClass) currentScope.resolve(ctx.expression().type.getName());
         MethodSymbol methodSymbol = (MethodSymbol) jClass.resolveMember(ctx.ID().getText());
 
+        methodCall.receiverType = jClass.getName();
+        methodCall.name = ctx.ID().getText();
+
         TypeSpec t;
         String typename = methodSymbol.getType().getName();
         if ( isClassName(typename) ) {
@@ -324,22 +327,14 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                     t1 = new PrimitiveTypeSpec(tn);
                 }
                 funcPtrType.argTypes.add(t1);
-
             }
-            methodCall.receiverType = new ObjectTypeSpec(jClass.getName());
-            FuncName funcName = new FuncName();
-            funcName.className = jClass.getName();
-            funcName.methodName = methodSymbol.getName();
-            methodCall.funcName = funcName;
             if(ctx.expressionList()!=null) {
                 for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
-                    System.out.println("Arguments=" + e.getText());
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
                         methodCall.args.add(varRef);
                     } else {
                         LiteralRef literalRef = (LiteralRef) visit(e);
-                        System.out.println("fds="+literalRef.id);
                         methodCall.args.add(literalRef);
                     }
                 }
