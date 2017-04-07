@@ -121,7 +121,11 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 
     @Override
     public OutputModelObject visitAssignStat(JParser.AssignStatContext ctx) {
-        AssignStat as = new AssignStat((Expr) visit(ctx.expression(0)),(Expr) visit(ctx.expression(1)));
+        AssignStat as ;//= new AssignStat((Expr) visit(ctx.expression(0)),(Expr) visit(ctx.expression(1)));
+        Expr l = (Expr) visit(ctx.expression(0));
+        Expr r = (Expr) visit(ctx.expression(1));
+        as = new AssignStat(l,r);
+
         return as;
     }
 
@@ -276,6 +280,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             funcName.className = ctx.scope.resolve(m.getEnclosingScope().getName()).getName();
             if(!classDef.vtable.contains(funcName)){
                 classDef.vtable.add(funcName);
+                funcName.slotNumber = m.getSlotNumber();
                 classDef.define.add("#define "+ ctx.scope.getName()+"_"+funcName.methodName +"_SLOT "+String.valueOf(m.getSlotNumber()));
             }
         }
