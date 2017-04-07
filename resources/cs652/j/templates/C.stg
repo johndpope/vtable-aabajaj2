@@ -81,7 +81,7 @@ PrintStat(p,args)   ::= <<
 printf(<p.print>, <args :{ arg | <arg> }; separator = ", ">);
 >>
 CallStat(c,call)    ::= "<call>;"
-CtorCall(ctor)      ::= " ((<ctor.name> *)alloc(&<ctor.name>_metadata))"
+CtorCall(ctor)      ::= "alloc(&<ctor.name>_metadata)"
 ReturnStat(r,expr)  ::= "return <expr>;"
 WhileStat(w,condition, stat) ::= <<
 while<w.condition> <w.stat>
