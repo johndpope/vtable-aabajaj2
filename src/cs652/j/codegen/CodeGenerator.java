@@ -132,12 +132,11 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             if ( isClassName(tn)) {
                 typeCast.type =  new ObjectTypeSpec(tn);
                 typeCast.expr = (Expr) right;
+                as = new AssignStat(l,typeCast);
             }
             else {
-                typeCast.type = new PrimitiveTypeSpec(tn);
-                typeCast.expr = (Expr) right;
+                as = new AssignStat(l,(Expr) right);
             }
-            as = new AssignStat(l,typeCast);
         } else {
             as = new AssignStat(l,r);
         }
