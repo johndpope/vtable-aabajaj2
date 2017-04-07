@@ -127,7 +127,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         OutputModelObject right = visit(ctx.expression(1));
         if(!(right instanceof LiteralRef)){
             TypeCast typeCast = new TypeCast();
-            typeCast.typeSpec = new ObjectTypeSpec(ctx.expression(0).type.getName());
+            typeCast.type = new ObjectTypeSpec(ctx.expression(0).type.getName());
             typeCast.expr = (Expr) right;
             as = new AssignStat(l,typeCast);
         } else {
