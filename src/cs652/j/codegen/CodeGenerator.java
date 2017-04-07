@@ -361,15 +361,44 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                 }
             }
         }
-
         return methodCall;
     }
 
     @Override
     public OutputModelObject visitCallStat(JParser.CallStatContext ctx) {
         CallStat callStat = new CallStat();
-        Expr e = (Expr) visit(ctx.expression());
-        callStat.call = e;
+        if(visit(ctx.expression()) instanceof  Expr) {
+            Expr e = (Expr) visit(ctx.expression());
+            callStat.call = e;
+        }else {
+            MethodDef methodDef = (MethodDef) visit(ctx.expression());
+            callStat.call = methodDef;
+        }
         return callStat;
+    }
+
+    @Override
+    public OutputModelObject visitMethodCall(JParser.MethodCallContext ctx) {
+        MethodCall methodCall = new MethodCall();
+        FuncPtrType funcPtrType = new FuncPtrType();
+        methodCall.name = ctx.ID().getText();
+        methodCall.receiverType = currentClass.getName();
+        MethodSymbol methodSymbol = currentClass.resolveMethod(ctx.ID().getText());
+        TypeSpec t;
+        String typename = methodSymbol.getType().getName();
+        if ( isClassName(typename) ) {
+            t =  new ObjectTypeSpec(typename);
+        }
+        else {
+            t = new PrimitiveTypeSpec(typename);
+        }
+        funcPtrType.returnType = t;
+        VarRef varRef = new  VarRef("this");
+        methodCall.receiver = (Expr) varRef ;
+        methodCall.fptrType = funcPtrType;
+        funcPtrType.argTypes.add(new ObjectTypeSpec(currentClass.getName()));
+
+        System.out.println("Scope = "+currentScope.resolve(ctx.ID().getText()));
+        return methodCall;
     }
 }
