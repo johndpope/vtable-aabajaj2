@@ -270,7 +270,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                 methodDef = (MethodDef) visit(c);
                 classDef.methods.add(methodDef);
 //                System.out.println("Fields size="+currentClass.getFields().size());
-
             }
         }
 
@@ -325,8 +324,8 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         FuncPtrType funcPtrType = new FuncPtrType();
         JClass jClass = (JClass) currentScope.resolve(ctx.expression().type.getName());
         MethodSymbol methodSymbol = (MethodSymbol) jClass.resolveMember(ctx.ID().getText());
-
-        methodCall.receiverType = jClass.getName();
+        methodCall.className = jClass.getName();
+        methodCall.receiverType = methodSymbol.getEnclosingScope().getName();
         methodCall.name = ctx.ID().getText();
 
         TypeSpec t;

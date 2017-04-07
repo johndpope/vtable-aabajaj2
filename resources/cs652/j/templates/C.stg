@@ -101,7 +101,7 @@ VarRef(v)           ::= "<v.id>"
 FieldRef(f, object) ::= "<object>-><f.fieldName>"
 ThisRef(t)          ::= "this"
 MethodCall(m, receiver, receiverType, fptrType, args) ::= <<
-<fptrType> (*(<receiver>)->clazz->_vtable)[<m.receiverType>_<m.name>_SLOT])(((<m.receiverType> *)<receiver>)<args :{ arg | ,<arg> }>)
+<fptrType> (*(<receiver>)->clazz->_vtable)[<m.className>_<m.name>_SLOT])(((<m.receiverType> *)<receiver>)<args :{ arg | ,<arg> }>)
 >>
 
 FuncPtrType(f, returnType, argTypes) ::= <<(*(<returnType>(*)(<argTypes :{ arg | <arg> }; separator = ", ">))>>

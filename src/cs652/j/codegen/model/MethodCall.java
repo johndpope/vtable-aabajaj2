@@ -14,5 +14,6 @@ public class MethodCall extends Expr {
     public @ModelElement
     List<Expr> args = new ArrayList<>();
     public String name;
+    public String className;
 
 }
