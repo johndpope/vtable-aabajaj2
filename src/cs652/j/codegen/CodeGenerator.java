@@ -362,9 +362,12 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
                         methodCall.args.add(varRef);
-                    } else {
+                    } else if(visit(e) instanceof LiteralRef){
                         LiteralRef literalRef = (LiteralRef) visit(e);
                         methodCall.args.add(literalRef);
+                    } else {
+                        CtorCall ctorCall = (CtorCall) visit(e);
+                        methodCall.args.add(ctorCall);
                     }
                 }
             }
