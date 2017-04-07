@@ -1,6 +1,5 @@
 package cs652.j.codegen.model;
 
-import com.sun.xml.internal.bind.v2.util.TypeCast;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
 public class MethodCall extends Expr {
     public @ModelElement VarRef receiver;
     public @ModelElement
-    TypeCast receiverType;
+    TypeSpec receiverType;
     public @ModelElement FuncPtrType fptrType;
     public @ModelElement
     List<VarRef> args;
