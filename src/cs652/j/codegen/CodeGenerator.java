@@ -10,8 +10,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
-import java.util.List;
-
 
 public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	public STGroup templates;
@@ -329,7 +327,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
         funcPtrType.returnType = t;
         methodCall.fptrType = funcPtrType;
-        if(visit(ctx.expression()) instanceof Expr) {
+        if(visit(ctx.expression()) instanceof VarRef) {
             VarRef varRef = (VarRef) visit(ctx.expression());
             methodCall.receiver = varRef;
         }else {
@@ -394,7 +392,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
         funcPtrType.returnType = t;
         VarRef varRef = new  VarRef("this");
-        methodCall.receiver = (Expr) varRef ;
+        methodCall.receiver = varRef ;
         methodCall.fptrType = funcPtrType;
         funcPtrType.argTypes.add(new ObjectTypeSpec(currentClass.getName()));
         return methodCall;
