@@ -276,7 +276,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             funcName.className = ctx.scope.resolve(m.getEnclosingScope().getName()).getName();
             if(!classDef.vtable.contains(funcName)){
                 classDef.vtable.add(funcName);
-                classDef.define.add("#define "+ funcName.className+"_"+funcName.methodName +"_SLOT "+String.valueOf(m.getSlotNumber()));
+                classDef.define.add("#define "+ ctx.scope.getName()+"_"+funcName.methodName +"_SLOT "+String.valueOf(m.getSlotNumber()));
             }
         }
         for(FieldSymbol a: ctx.scope.getFields() ){
@@ -361,6 +361,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                 for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
+
                         methodCall.args.add(varRef);
                     } else if(visit(e) instanceof LiteralRef){
                         LiteralRef literalRef = (LiteralRef) visit(e);
