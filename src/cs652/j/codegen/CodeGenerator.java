@@ -396,7 +396,10 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                         methodCall.args.add(literalRef);
                     } else {
                         CtorCall ctorCall = (CtorCall) visit(e);
-                        methodCall.args.add(ctorCall);
+                        TypeCast typeCast = new TypeCast();
+                        typeCast.type = new ObjectTypeSpec(e.type.getName());
+                        typeCast.expr = ctorCall;
+                        methodCall.args.add(typeCast);
                     }
                 }
         }
@@ -467,7 +470,10 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                     methodCall.args.add(literalRef);
                 } else {
                     CtorCall ctorCall = (CtorCall) visit(e);
-                    methodCall.args.add(ctorCall);
+                    TypeCast typeCast = new TypeCast();
+                    typeCast.type = new ObjectTypeSpec(e.type.getName());
+                    typeCast.expr = ctorCall;
+                    methodCall.args.add(typeCast);
                 }
             }
         }
