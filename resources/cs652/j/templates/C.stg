@@ -92,7 +92,6 @@ if<i.condition> <stat>
 IfElseStat(i,condition, stat, elseStat) ::= <<
 if<i.condition> <stat>
 else <elseStat>
-
 >>
 
 NullRef(n)          ::= "NULL"
