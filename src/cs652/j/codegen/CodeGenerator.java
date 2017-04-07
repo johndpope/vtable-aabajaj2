@@ -217,12 +217,14 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
 
 //        System.out.println("Type = "+t.type);
-        varDef = new VarDef(t,"this");
-        methodDef.args.add(varDef);
+//        varDef = new VarDef(t,"this");
+        ThisRef thisRef = new ThisRef();
+        methodDef.args.add(thisRef);
+        thisRef.tn = t.type;
         if(ctx.formalParameters().formalParameterList()!=null){
             for(JParser.FormalParameterContext c: ctx.formalParameters().formalParameterList().formalParameter()){
 //                System.out.println("Formal= "+c.getText());
-                methodDef.args.add((VarDef) visit(c));
+                methodDef.args.add((Expr) visit(c));
             }
         }
         return methodDef;
@@ -329,9 +331,15 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
         funcPtrType.returnType = t;
         methodCall.fptrType = funcPtrType;
-        if(visit(ctx.expression()) instanceof VarRef) {
-            VarRef varRef = (VarRef) visit(ctx.expression());
-            methodCall.receiver = varRef;
+        if(visit(ctx.expression()) instanceof Expr) {
+            if(visit(ctx.expression()) instanceof VarRef) {
+                VarRef varRef = (VarRef) visit(ctx.expression());
+                methodCall.receiver = varRef;
+            }else {
+                ThisRef thisRef = (ThisRef) visit(ctx.expression());
+                methodCall.receiver = thisRef;
+                System.out.println("in this ref");
+            }
         }else {
             FieldRef fieldRef = (FieldRef) visit(ctx.expression());
             methodCall.receiver = fieldRef;
@@ -393,12 +401,11 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             t = new PrimitiveTypeSpec(typename);
         }
         funcPtrType.returnType = t;
-        VarRef varRef = new  VarRef("this");
-        methodCall.receiver = (Expr) varRef ;
+//        VarRef varRef = new  VarRef("this");
+        ThisRef thisRef = new ThisRef();
+        methodCall.receiver = thisRef ;
         methodCall.fptrType = funcPtrType;
         funcPtrType.argTypes.add(new ObjectTypeSpec(currentClass.getName()));
-
-        System.out.println("Scope = "+currentScope.resolve(ctx.ID().getText()));
         return methodCall;
     }
 }
