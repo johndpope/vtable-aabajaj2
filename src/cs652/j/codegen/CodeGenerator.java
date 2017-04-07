@@ -371,8 +371,9 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                     if (visit(e) instanceof VarRef) {
                         VarRef varRef = (VarRef) visit(e);
                         TypeCast typeCast = new TypeCast();
-                        VariableSymbol variableSymbol = (VariableSymbol) methodSymbol.resolve(varRef.id);
-                        typeCast.type = new ObjectTypeSpec(variableSymbol.getType().getName());
+                        System.out.println("VS="+varRef.id);
+                        typeCast.type = new ObjectTypeSpec(ctx.expression().type.getName());
+                        typeCast.expr = varRef;
                         methodCall.args.add(typeCast);
                     } else if(visit(e) instanceof LiteralRef){
                         LiteralRef literalRef = (LiteralRef) visit(e);
@@ -425,10 +426,11 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 //            if(ctx.expressionList()!=null) {
             for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                 if (visit(e) instanceof VarRef) {
-                    VarRef ref = (VarRef) visit(e);
+                    VarRef varRef2 = (VarRef) visit(e);
                     TypeCast typeCast = new TypeCast();
-                    VariableSymbol variableSymbol = (VariableSymbol) methodSymbol.resolve(ref.id);
-                    typeCast.type = new ObjectTypeSpec(variableSymbol.getType().getName());
+                    System.out.println("VS="+varRef2.id);
+                    typeCast.type = new ObjectTypeSpec(e.type.getName());
+                    typeCast.expr = varRef2;
                     methodCall.args.add(typeCast);
                 } else if(visit(e) instanceof LiteralRef){
                     LiteralRef literalRef = (LiteralRef) visit(e);
