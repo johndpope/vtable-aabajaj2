@@ -9,7 +9,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
-import java.lang.reflect.Method;
 
 public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 	public STGroup templates;
@@ -28,7 +27,19 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 		return file;
 	}
 
-	@Override
+    @Override
+    public OutputModelObject visitFieldRef(JParser.FieldRefContext ctx) {
+        FieldRef fieldRef = new FieldRef();
+        System.out.println("In fieldRef="+ctx.expression().getText());
+        fieldRef.fieldName = ctx.ID().getText();
+
+        System.out.println("Classname= "+currentScope.getEnclosingScope().getName());
+//        if(ctx)
+//        fieldRef.object = currentClass.resolve(ctx)
+        return fieldRef;
+    }
+
+    @Override
 	public OutputModelObject visitFile(JParser.FileContext ctx) {
 		MainMethod main = (MainMethod) visit(ctx.main());
 		CFile file = new CFile(fileName);
@@ -54,7 +65,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         Block block = new Block();
         currentScope = ctx.scope;
         for (JParser.StatementContext stat : ctx.statement()) {
-            if(stat instanceof JParser.LocalVarStatContext) {
+            if(visit(stat) instanceof VarDef) {
                 OutputModelObject smt = visit(stat);
                 block.locals.add(smt);
             }else {
@@ -206,7 +217,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         methodDef.args.add(varDef);
         if(ctx.formalParameters().formalParameterList()!=null){
             for(JParser.FormalParameterContext c: ctx.formalParameters().formalParameterList().formalParameter()){
-                System.out.println("FOrnam= "+c.getText());
+//                System.out.println("Formal= "+c.getText());
                 methodDef.args.add((VarDef) visit(c));
             }
         }
@@ -227,7 +238,9 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             MethodDef methodDef;
             methodDef = (MethodDef) visit(c);
             classDef.methods.add(methodDef);
+
         }
+
         for(MethodSymbol m : ctx.scope.getMethods()){
             FuncName funcName = new FuncName();
             funcName.methodName = m.getName();
@@ -247,7 +260,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     @Override
     public OutputModelObject visitFormalParameter(JParser.FormalParameterContext ctx) {
         VarDef varDef;
-//        System.out.println("VarDef= "+ctx.jType().getText());
         TypeSpec t;
         String typename = ctx.jType().getText();
         if ( isClassName(typename) ) {
@@ -266,8 +278,8 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
 //        FuncPtrType funcPtrType = new FuncPtrType();
 //        JClass jClass = getClassfromCtx(ctx).scope.
 //        JMethod jMethod = (JMethod) currentClass.resolveMethod(ctx.ID().getText());
-////        funcPtrType.returnType = ctx.type;
-////        System.out.println("in Qmethod call= "+currentScope.getEnclosingScope());
+//        funcPtrType.returnType = ctx.type;
+//        System.out.println("in Qmethod call= "+currentScope.getEnclosingScope());
 //        System.out.println("in Qmethod call= "+ctx.expression().getText());
 //
 //        return methodCall;

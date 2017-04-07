@@ -39,6 +39,7 @@ void (*<class.name>_vtable[])() = {
 };
 
 metadata <class.name>_metadata = {"<class.clazz.name>", sizeof(<class.name>), &<class.name>_vtable};
+
 >>
 
 MethodDef(m,funcName,returnType,args,body) ::= <<
@@ -97,7 +98,7 @@ NullRef(n)          ::= "NULL"
 
 LiteralRef(lit)     ::= "<lit.id>"
 VarRef(v)           ::= "<v.id>"
-FieldRef(f, object) ::= ""
+FieldRef(f, object) ::= "<object>-><f.fieldName>"
 ThisRef(t)          ::= "this"
 MethodCall(m, receiver, receiverType, fptrType, args) ::= <<
 <fptrType> (*(<receiver>)->clazz->_vtable)[<m.name>_SLOT])(((<receiverType> *)<receiver>),<args :{ arg | <arg> }; separator = ", ">);"
