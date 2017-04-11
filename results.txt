@@ -24,7 +24,7 @@
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ vtable ---
 [INFO] Changes detected - recompiling the module!
-[INFO] Compiling 4 source files to /Users/parrt/grading/cs652/S17/vtable-aabajaj2/target/test-classes
+[INFO] Compiling 2 source files to /Users/parrt/grading/cs652/S17/vtable-aabajaj2/target/test-classes
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ vtable ---
 [INFO] Surefire report directory: /Users/parrt/grading/cs652/S17/vtable-aabajaj2/target/surefire-reports
@@ -33,7 +33,7 @@
  T E S T S
 -------------------------------------------------------
 Running cs652.j.TestCGen
-Working dir: /var/folders/93/9kzk2ccm8xj8k70059b28jk80000gp/T/junit5052568622863610573
+Working dir: /var/folders/93/9kzk2ccm8xj8k70059b28jk80000gp/T/junit7200534562977838997
 type of receiverType's model element isn't recognized: String
 type of receiverType's model element isn't recognized: String
 type of receiverType's model element isn't recognized: String
@@ -126,8 +126,8 @@ type of condition's model element isn't recognized: String
 type of stat's model element isn't recognized: String
 type of condition's model element isn't recognized: String
 type of stat's model element isn't recognized: String
-Tests run: 52, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 1.761 sec <<< FAILURE!
-testCExec[InheritMethods3Level.j](cs652.j.TestCGen)  Time elapsed: 0.046 sec  <<< FAILURE!
+Tests run: 52, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 1.723 sec <<< FAILURE!
+testCExec[InheritMethods3Level.j](cs652.j.TestCGen)  Time elapsed: 0.039 sec  <<< FAILURE!
 org.junit.ComparisonFailure: expected:<[]> but was:<[InheritMethods3Level.c:68:80: warning: incompatible pointer types passing 'Animal *' to parameter of type 'Pekinese *' [-Wincompatible-pointer-types]
 return (*(int(*)(Pekinese * )) (*(this)->clazz->_vtable)[Pekinese_getID_SLOT])(((Animal *)this));
                                                                                ^~~~~~~~~~~~~~~~
@@ -175,7 +175,7 @@ return (*(int(*)(Pekinese * )) (*(this)->clazz->_vtable)[Pekinese_getID_SLOT])((
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 
-testCGen[InheritMethods3Level.j](cs652.j.TestCGen)  Time elapsed: 0.016 sec  <<< FAILURE!
+testCGen[InheritMethods3Level.j](cs652.j.TestCGen)  Time elapsed: 0.017 sec  <<< FAILURE!
 org.junit.ComparisonFailure: expected:<[]> but was:<[72c72
 <     return (*(int (*)(Animal *))(*(this)->clazz->_vtable)[Pekinese_getID_SLOT]) (((Animal *) this));
 ---
@@ -223,7 +223,7 @@ org.junit.ComparisonFailure: expected:<[]> but was:<[72c72
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 
-testCGen[vehicle.j](cs652.j.TestCGen)  Time elapsed: 0.018 sec  <<< FAILURE!
+testCGen[vehicle.j](cs652.j.TestCGen)  Time elapsed: 0.015 sec  <<< FAILURE!
 org.junit.ComparisonFailure: expected:<[]> but was:<[52d51
 < #define Car_start_SLOT 0
 53a53
@@ -282,10 +282,6 @@ org.junit.ComparisonFailure: expected:<[]> but was:<[52d51
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
 
-Running cs652.j.TestExprTypes
-Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 sec
-Running cs652.j.TestSymbolDefs
-Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 sec
 
 Results :
 
@@ -293,13 +289,13 @@ Failed tests:   testCExec[InheritMethods3Level.j](cs652.j.TestCGen): expected:<[
   testCGen[InheritMethods3Level.j](cs652.j.TestCGen): expected:<[]> but was:<[72c72(..)
   testCGen[vehicle.j](cs652.j.TestCGen): expected:<[]> but was:<[52d51(..)
 
-Tests run: 104, Failures: 3, Errors: 0, Skipped: 0
+Tests run: 52, Failures: 3, Errors: 0, Skipped: 0
 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 4.232 s
-[INFO] Finished at: 2017-04-11T14:55:29-07:00
+[INFO] Total time: 3.983 s
+[INFO] Finished at: 2017-04-11T16:17:38-07:00
 [INFO] Final Memory: 23M/371M
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.12.4:test (default-test) on project vtable: There are test failures.
