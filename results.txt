@@ -1,0 +1,314 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building vtable code generation 1.0
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- maven-enforcer-plugin:1.2:enforce (enforce-maven) @ vtable ---
+[INFO] 
+[INFO] --- antlr4-maven-plugin:4.6:antlr4 (antlr) @ vtable ---
+[INFO] ANTLR 4: Processing source directory /Users/parrt/grading/cs652/S17/vtable-aabajaj2/grammars
+[INFO] Processing grammar: cs652/j/parser/J.g4
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ vtable ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 131 resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:compile (default-compile) @ vtable ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 47 source files to /Users/parrt/grading/cs652/S17/vtable-aabajaj2/target/classes
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ vtable ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /Users/parrt/grading/cs652/S17/vtable-aabajaj2/src/test/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ vtable ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 4 source files to /Users/parrt/grading/cs652/S17/vtable-aabajaj2/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ vtable ---
+[INFO] Surefire report directory: /Users/parrt/grading/cs652/S17/vtable-aabajaj2/target/surefire-reports
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running cs652.j.TestCGen
+Working dir: /var/folders/93/9kzk2ccm8xj8k70059b28jk80000gp/T/junit5052568622863610573
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of condition's model element isn't recognized: String
+type of condition's model element isn't recognized: String
+type of condition's model element isn't recognized: String
+type of condition's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of receiverType's model element isn't recognized: String
+type of condition's model element isn't recognized: String
+type of stat's model element isn't recognized: String
+type of condition's model element isn't recognized: String
+type of stat's model element isn't recognized: String
+Tests run: 52, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 1.761 sec <<< FAILURE!
+testCExec[InheritMethods3Level.j](cs652.j.TestCGen)  Time elapsed: 0.046 sec  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[]> but was:<[InheritMethods3Level.c:68:80: warning: incompatible pointer types passing 'Animal *' to parameter of type 'Pekinese *' [-Wincompatible-pointer-types]
+return (*(int(*)(Pekinese * )) (*(this)->clazz->_vtable)[Pekinese_getID_SLOT])(((Animal *)this));
+                                                                               ^~~~~~~~~~~~~~~~
+1 warning generated.
+]>
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at cs652.j.TestCGen.checkCExec(TestCGen.java:98)
+	at cs652.j.TestCGen.testCExec(TestCGen.java:25)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+
+testCGen[InheritMethods3Level.j](cs652.j.TestCGen)  Time elapsed: 0.016 sec  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[]> but was:<[72c72
+<     return (*(int (*)(Animal *))(*(this)->clazz->_vtable)[Pekinese_getID_SLOT]) (((Animal *) this));
+---
+>     return (*(int (*)(Pekinese *))(*(this)->clazz->_vtable)[Pekinese_getID_SLOT]) (((Animal *) this));
+]>
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at cs652.j.TestCGen.checkCGen(TestCGen.java:72)
+	at cs652.j.TestCGen.testCGen(TestCGen.java:20)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+
+testCGen[vehicle.j](cs652.j.TestCGen)  Time elapsed: 0.018 sec  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[]> but was:<[52d51
+< #define Car_start_SLOT 0
+53a53
+> #define Car_start_SLOT 0
+67c67
+< (void (*)())&Car_start, (void (*)())&Vehicle_getColor, (void (*)())&Car_setDoors};
+---
+> (void (*)())&Vehicle_getColor, (void (*)())&Car_start, (void (*)())&Car_setDoors};
+76d75
+< #define Truck_start_SLOT 0
+77a77
+> #define Truck_start_SLOT 0
+91c91
+< (void (*)())&Truck_start, (void (*)())&Vehicle_getColor, (void (*)())&Truck_setPayload};
+---
+> (void (*)())&Vehicle_getColor, (void (*)())&Truck_start, (void (*)())&Truck_setPayload};
+]>
+	at org.junit.Assert.assertEquals(Assert.java:115)
+	at org.junit.Assert.assertEquals(Assert.java:144)
+	at cs652.j.TestCGen.checkCGen(TestCGen.java:72)
+	at cs652.j.TestCGen.testCGen(TestCGen.java:20)
+	at sun.reflect.GeneratedMethodAccessor4.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.execute(JUnit4Provider.java:252)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:141)
+	at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:112)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:497)
+	at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:189)
+	at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:165)
+	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:85)
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:115)
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:75)
+
+Running cs652.j.TestExprTypes
+Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 sec
+Running cs652.j.TestSymbolDefs
+Tests run: 26, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 sec
+
+Results :
+
+Failed tests:   testCExec[InheritMethods3Level.j](cs652.j.TestCGen): expected:<[]> but was:<[InheritMethods3Level.c:68:80: warning: incompatible pointer types passing 'Animal *' to parameter of type 'Pekinese *' [-Wincompatible-pointer-types](..)
+  testCGen[InheritMethods3Level.j](cs652.j.TestCGen): expected:<[]> but was:<[72c72(..)
+  testCGen[vehicle.j](cs652.j.TestCGen): expected:<[]> but was:<[52d51(..)
+
+Tests run: 104, Failures: 3, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 4.232 s
+[INFO] Finished at: 2017-04-11T14:55:29-07:00
+[INFO] Final Memory: 23M/371M
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.12.4:test (default-test) on project vtable: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /Users/parrt/grading/cs652/S17/vtable-aabajaj2/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
