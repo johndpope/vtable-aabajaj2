@@ -329,7 +329,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         MethodCall methodCall = new MethodCall();
         FuncPtrType funcPtrType = new FuncPtrType();
         JClass jClass = (JClass) currentScope.resolve(ctx.expression().type.getName());
-        MethodSymbol methodSymbol = (MethodSymbol) jClass.resolveMember(ctx.ID().getText());
+        MethodSymbol methodSymbol = (MethodSymbol) jClass.resolve(ctx.ID().getText());
         methodCall.className = jClass.getName();
         methodCall.receiverType = methodSymbol.getEnclosingScope().getName();
         methodCall.name = ctx.ID().getText();
