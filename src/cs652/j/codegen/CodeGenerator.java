@@ -413,7 +413,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         FuncPtrType funcPtrType = new FuncPtrType();
         methodCall.name = ctx.ID().getText();
         methodCall.className = currentClass.getName();
-        MethodSymbol methodSymbol = currentClass.resolveMethod(ctx.ID().getText());
+        MethodSymbol methodSymbol = (MethodSymbol) currentClass.resolve(ctx.ID().getText());
         methodCall.receiverType = methodSymbol.getEnclosingScope().getName();
         TypeSpec t;
         String typename = methodSymbol.getType().getName();
@@ -427,7 +427,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         VarRef varRef = new  VarRef("this");
         methodCall.receiver = varRef ;
         methodCall.fptrType = funcPtrType;
-        funcPtrType.argTypes.add(new ObjectTypeSpec(currentClass.getName()));
+        funcPtrType.argTypes.add(new ObjectTypeSpec(methodSymbol.getEnclosingScope().getName()));
         if(ctx.expressionList()!=null) {
             for (JParser.ExpressionContext e : ctx.expressionList().expression()) {
                 String ty = e.type.getName();
