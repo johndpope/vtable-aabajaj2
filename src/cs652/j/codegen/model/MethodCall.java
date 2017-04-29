@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class MethodCall extends Expr {
     public @ModelElement Expr receiver;
-    public @ModelElement String receiverType;
+    public @ModelElement TypeSpec receiverType;
     public @ModelElement FuncPtrType fptrType;
     public @ModelElement
     List<Expr> args = new ArrayList<>();
