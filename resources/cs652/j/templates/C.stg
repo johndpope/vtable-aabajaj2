@@ -30,7 +30,7 @@ typedef struct {
     <fields :{ field | <field>;}; separator = "\n">
 } <class.name>;
 
-<vtable :{ v |#define <class.name>_<v.f.methodName>_SLOT <v.f.slotNumber>;}; separator = "\n">
+<vtable :{ v |#define <class.name>_<v.f.methodName>_SLOT <v.f.slotNumber>}; separator = "\n">
 
 <methods>
 
