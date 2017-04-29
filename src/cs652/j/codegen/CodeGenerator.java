@@ -161,6 +161,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
     }
 
+
     @Override
     public OutputModelObject visitLiteralRef(JParser.LiteralRefContext ctx) {
         return new LiteralRef(ctx.getText());
@@ -220,10 +221,15 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         currentScope = ctx.scope;
         String typename;
         FuncName funcName = new FuncName(ctx.scope.getEnclosingScope().getName(),ctx.ID().getText(),0);
-        typename = getString(ctx);
+        if (ctx.jType()!=null) {
+            typename = ctx.jType().getText();
+        }else {
+            typename = "void";
+        }
         methodDef.returnType = getTypeSpec(typename);
         methodDef.body = (Block) visit(ctx.methodBody());
         methodDef.funcName = funcName;
+
         TypeSpec t;
         VarDef varDef;
         String tName = ctx.scope.getEnclosingScope().getName();
@@ -236,16 +242,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             }
         }
         return methodDef;
-    }
-
-    private String getString(JParser.MethodDeclarationContext ctx) {
-        String typename;
-        if (ctx.jType()!=null) {
-            typename = ctx.jType().getText();
-        }else {
-            typename = "void";
-        }
-        return typename;
     }
 
     @Override
@@ -314,7 +310,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         JClass jClass = (JClass) currentScope.resolve(ctx.expression().type.getName());
         MethodSymbol methodSymbol = (MethodSymbol) jClass.resolve(ctx.ID().getText());
         methodCall.className = jClass.getName();
-        methodCall.receiverType = new ObjectTypeSpec(methodSymbol.getEnclosingScope().getName());
+        methodCall.receiverType = methodSymbol.getEnclosingScope().getName();
         methodCall.name = ctx.ID().getText();
 
         TypeSpec t;
@@ -380,7 +376,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         methodCall.name = ctx.ID().getText();
         methodCall.className = currentClass.getName();
         MethodSymbol methodSymbol = (MethodSymbol) currentClass.resolve(ctx.ID().getText());
-        methodCall.receiverType = new ObjectTypeSpec(methodSymbol.getEnclosingScope().getName());
+        methodCall.receiverType = methodSymbol.getEnclosingScope().getName();
         TypeSpec t;
         String typename = methodSymbol.getType().getName();
         t = getTypeSpec(typename);
