@@ -13,6 +13,9 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupFile;
 
+import java.util.Collection;
+import java.util.Collections;
+
 
 public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public STGroup templates;
@@ -145,7 +148,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         } else {
             as = new AssignStat(l,r);
         }
-
         return as;
     }
 
@@ -218,9 +220,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         MethodDef methodDef = new MethodDef();
         currentScope = ctx.scope;
         String typename;
-        FuncName funcName = new FuncName();
-        funcName.className = ctx.scope.getEnclosingScope().getName();
-        funcName.methodName = ctx.ID().getText();
+        FuncName funcName = new FuncName(ctx.scope.getEnclosingScope().getName(),ctx.ID().getText(),0);
         if (ctx.jType()!=null) {
             typename = ctx.jType().getText();
         }else {
@@ -264,6 +264,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         ClassDef classDef = new ClassDef(ctx.scope);
         currentScope = ctx.scope;
         currentClass = ctx.scope;
+
         for (JParser.ClassBodyDeclarationContext c : ctx.classBody().classBodyDeclaration()){
             if(visit(c) instanceof MethodDef){
                 MethodDef methodDef;
@@ -273,14 +274,9 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
         }
 
         for(MethodSymbol m : ctx.scope.getMethods()){
-            FuncName funcName = new FuncName();
-            funcName.methodName = m.getName();
-            funcName.className = ctx.scope.resolve(m.getEnclosingScope().getName()).getName();
-            if(!classDef.vtable.contains(funcName)){
-                classDef.vtable.add(funcName);
-                funcName.slotNumber = m.getSlotNumber();
-                classDef.define.add("#define "+ ctx.scope.getName()+"_"+funcName.methodName +"_SLOT "+String.valueOf(m.getSlotNumber()));
-            }
+            FuncName funcName = new FuncName(ctx.scope.resolve(m.getEnclosingScope().getName()).getName(),m.getName(),m.getSlotNumber());
+            classDef.vtable.add(funcName);
+            funcName.slotNumber = m.getSlotNumber();
         }
         for(FieldSymbol a: ctx.scope.getFields() ){
             VarDef varDef;
@@ -290,7 +286,7 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
             varDef = new VarDef(t,a.getName());
             classDef.fields.add(varDef);
         }
-
+        Collections.sort(classDef.getVtable(),(o1, o2) -> o1.slotNumber - o2.slotNumber);
         return classDef;
     }
 
@@ -344,7 +340,6 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
                     VarRef varRef = (VarRef) visit(e);
                     TypeCast typeCast = new TypeCast();
                     String ty5 = ctx.expression().type.getName();
-
                     typeCast.type = getTypeSpec(ty5);
                     typeCast.expr = varRef;
                     methodCall.args.add(typeCast);
@@ -367,9 +362,9 @@ public class CodeGenerator extends JBaseVisitor<OutputModelObject> {
     public OutputModelObject visitCallStat(JParser.CallStatContext ctx) {
         CallStat callStat = new CallStat();
         if(visit(ctx.expression()) instanceof  Expr) {
-            callStat.call = (Expr) visit(ctx.expression());
+            callStat.call = visit(ctx.expression());
         }else {
-            callStat.call = (MethodDef) visit(ctx.expression());
+            callStat.call = visit(ctx.expression());
         }
         return callStat;
     }

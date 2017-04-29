@@ -18,5 +18,7 @@ public class ClassDef extends OutputModelObject{
 
     public String getName(){return clazz.getName();}
 
-
+    public List<FuncName> getVtable() {
+        return vtable;
+    }
 }

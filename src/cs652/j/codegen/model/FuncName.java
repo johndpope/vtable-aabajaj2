@@ -11,4 +11,9 @@ public class FuncName extends OutputModelObject {
         return this.className+"_"+this.methodName;
     }
 
+    public FuncName(String className, String methodName, int slotNumber) {
+        this.className = className;
+        this.methodName = methodName;
+        this.slotNumber = slotNumber;
+    }
 }
