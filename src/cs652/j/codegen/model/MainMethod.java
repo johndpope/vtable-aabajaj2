@@ -18,4 +18,7 @@ public class MainMethod extends OutputModelObject{
     public @ModelElement
     String args;
 
+    public MainMethod(Block body) {
+        this.body = body;
+    }
 }

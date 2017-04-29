@@ -11,4 +11,11 @@ public class MethodDef extends OutputModelObject {
     public @ModelElement Block body;
     public @ModelElement FuncName funcName;
     public @ModelElement TypeSpec returnType;
+
+//    public MethodDef(List<VarDef> args, Block body, FuncName funcName, TypeSpec returnType) {
+//        this.args = args;
+//        this.body = body;
+//        this.funcName = funcName;
+//        this.returnType = returnType;
+//    }
 }
