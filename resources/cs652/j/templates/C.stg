@@ -100,7 +100,7 @@ LiteralRef(lit)     ::= "<lit.id>"
 VarRef(v)           ::= "<v.id>"
 FieldRef(f, object) ::= "<object>-><f.fieldName>"
 ThisRef(t)          ::= "this"
-MethodCall(m, receiver, receiverType, fptrType, args) ::= <<
+MethodCall(m, receiver, fptrType, args) ::= <<
 <fptrType> (*(<receiver>)->clazz->_vtable)[<m.className>_<m.name>_SLOT])(((<m.receiverType> *)<receiver>)<args :{ arg | ,<arg> }>)
 >>
 
