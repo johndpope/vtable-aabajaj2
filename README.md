@@ -2,9 +2,10 @@ Translated a subset of Java to pure C using ANTLR, StringTemplate, and JAVA.
 The subset is focused on classes and methods. Language translation, polymorphism and dynamic dispatch is implemented using vtables, 
 which C++ uses.
 
-JAVA Class Employee and Manager will be converted to C as follows: 
+##JAVA Class Employee and Manager will be converted to C as follows: 
 
-`class Employee {
+```
+class Employee {
     int number;
     int getID() { return 123; }
     int something() {
@@ -15,11 +16,13 @@ JAVA Class Employee and Manager will be converted to C as follows:
 class Mgr extends Employee {
     int level;
     Employee other;
-}`
+}
+```
 
 C code: 
 
-`#include <stdio.h>
+```
+#include <stdio.h>
 #include <stdlib.h>
 
 typedef struct {
@@ -85,4 +88,5 @@ void (*Mgr_vtable[])() = {
     (void (*)())&Employee_something
 };
 
-metadata Mgr_metadata = {"Mgr", sizeof(Mgr), &Mgr_vtable};`
+metadata Mgr_metadata = {"Mgr", sizeof(Mgr), &Mgr_vtable};
+```
